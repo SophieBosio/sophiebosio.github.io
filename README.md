@@ -1,7 +1,7 @@
 # Sophie Bosio's Portfolio Page
 
-Hello!
+Thank you for visiting my portfolio page!
 
-This is my personal website, detailing my skillsets and my previous work.
+Here, I have described my skillsets, qualifications, and previous work.
 
-Thank you for visiting! If you'd like to know more about how the website was built, please view the original repository at https://github.com/SophieBosio/portfolio.
+If you would like to get in touch with me, please do so via my GitHub page or the email provided on the website. Thank you!
