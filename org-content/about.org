@@ -1,10 +1,10 @@
 #+hugo_base_dir: ../
-#+hugo_section: /about
+#+hugo_section: /
 
 * DONE About                                                 :blog:@personal:
 CLOSED: [2023-06-08 Thu 17:43]
 :PROPERTIES:
-:EXPORT_FILE_NAME: _index
+:EXPORT_FILE_NAME: about
 :END:
 I'm Sophie! I was born in Oslo in 1999, and after some moving back and forth
 for my studies, I'm back in my home city.

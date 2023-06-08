@@ -1,13 +1,12 @@
 #+hugo_base_dir: ../
-#+hugo_section: /education
+#+hugo_section: /
 
 * DONE Education
 CLOSED: [2023-06-08 Thu 14:48]
 :PROPERTIES:
-:EXPORT_FILE_NAME: _index
+:EXPORT_FILE_NAME: education
 :END:
 ** BSc
-
 I have a bachelor's degree in [[https://www.uib.no/en/studies/BASV-KOGNI][Cognitive Science]] from the [[https://www.uib.no/][University of Bergen]], Norway.
 
 The full course plan for the degree can be found at the university's websites,
