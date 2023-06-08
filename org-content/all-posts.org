@@ -1,0 +1,44 @@
+#+hugo_base_dir: ../
+
+* DONE Static Site Generation with Hugo                          :blog:@tech:
+CLOSED: [2023-06-08 Thu 12:18]
+:PROPERTIES:
+:EXPORT_FILE_NAME: hugo
+:END:
+This website is built with [[https://gohugo.io/][Hugo]] and [[https://ox-hugo.scripter.co/][=ox-hugo=]], an exporting engine that lets me
+write my posts in [[https://orgmode.org/][Org mode]] and then put it online easily.
+
+
+* DONE Monads in Haskell                                         :blog:@tech:
+CLOSED: [2023-06-08 Thu 12:56]
+:PROPERTIES:
+:EXPORT_FILE_NAME: monads-haskell
+:END:
+Monads are a special kind of mathematical structure. Technically (category
+theoretically) speaking, they can be defined quite succintly as "a monoid in
+the category of endofunctors".
+
+But what exactly does that mean? That question has been posed to Google by many
+a beginner to functional programming. And that in turn, is because monads are a
+very useful structure that actually makes our lives as functional programmer
+significantly easier! Once you get past the definition of a monad and you're ready to actually use them, that is.
+
+Personally, I had the most luck starting with /how/ to use monads in functional
+programming, and as I got better at using them, I would re-read the definitions
+and slowly feel like I started to understand them.
+
+I think it helps to have a pretty clear understanding of what functions /are/,
+in the functional programming sense.
+
+#+begin_details
+#+begin_summary
+Functions in Haskell
+#+end_summary
+A function in Haskell has an optional signature, with its input and output types.
+
+#+begin_src haskell
+f :: a -> a
+f x = x
+#+end_src
+#+end_details
+

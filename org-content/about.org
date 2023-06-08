@@ -1,0 +1,7 @@
+#+hugo_base_dir: ../
+#+hugo_section: /about
+
+* TODO About
+:PROPERTIES:
+:EXPORT_FILE_NAME: about
+:END:

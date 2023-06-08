@@ -1,0 +1,21 @@
+#+hugo_base_dir: ../
+#+hugo_section: /
+
+* DONE Introduction                                          :blog:@personal:
+CLOSED: [2023-06-08 Thu 12:20]
+:PROPERTIES:
+:EXPORT_FILE_NAME: _index
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :framed true
+:END:
+Hi! I'm Sophie, a master's student at the University of Oslo.
+
+I'm currently gearing up to write my MSc thesis, which will be about using program
+inversion to automatically derive good test input generators, hopefully making
+tools such as QuickCheck even more appealing to the average programmer.
+
+Besides functional programming, I'm a (budding) Emacs enthusiast with an
+above-average interest in coffee. When I'm not learning programming languages,
+I like to try my hand at learning natural ones.
+
+You can reach me via my UiO email at sabosio@uio.no, and you can find me on
+[[https://github.com/SophieBosio][GitHub]] 🌱

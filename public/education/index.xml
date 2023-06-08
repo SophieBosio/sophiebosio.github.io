@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Education on Sophie Bosio</title>
+    
+    
+    
+    <link>http://sophiebosio.github.io/education/</link>
+    <description>Recent content in Education on Sophie Bosio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright (c) Sophie Bosio 2023</copyright>
+    <lastBuildDate>Thu, 08 Jun 2023 14:48:00 +0200</lastBuildDate>
+    
+	<atom:link href="http://sophiebosio.github.io/education/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Education</title>
+      <link>http://sophiebosio.github.io/education/education/</link>
+      <pubDate>Thu, 08 Jun 2023 14:48:00 +0200</pubDate>
+      
+      <guid>http://sophiebosio.github.io/education/education/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          BSc#I have a bachelor&amp;rsquo;s degree in Cognitive Science from the University of Bergen, Norway.
+The full course plan for the degree can be found at the university&amp;rsquo;s websites, but unfortunately, the relevant plan (admission in 2019) is only available in Norwegian.
+Each course page does however have an English version. A brief overview is provided below for the reader&amp;rsquo;s convenience.
+Courses in Cognitive Science at UiBKOGVIT101 - Introduction to Cognitive Science INF100 - Introduction to Programming (Python) EXFAC00SK - Introduction to Linguistics DASPSTAT - Statistics for Cognition Research LOG110 - Introduction to Formal Logic LOG111 - First-Order Logic INF101 - Introduction to Object-Oriented Programming (Java) LING122 - Languages and Cognition INFO282 - Knowledge Representation and Reasoning (Prolog) INF122 - Introduction to Functional Programming (Haskell) FIL105 - Philosophy of Mind PSYK120 - Cognitive and Biological Psychology EXPHIL-PSSEM - Examen Facultatum in Psychology INFO135 - Algorithms, Data Structures, and Programming MAT111 - Introduction to Calculus INF223 - Category Theory INF227 - Mathematical Logic MAT121 - Linear Algebra During my BSc, I had an exchange semester at the University of Bologna, Italy.
+          
+        
+        </description>
+    </item>
+    
+  </channel>
+</rss>
