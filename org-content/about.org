@@ -1,7 +1,30 @@
 #+hugo_base_dir: ../
 #+hugo_section: /about
 
-* TODO About
+* DONE About                                                 :blog:@personal:
+CLOSED: [2023-06-08 Thu 17:43]
 :PROPERTIES:
-:EXPORT_FILE_NAME: about
+:EXPORT_FILE_NAME: _index
 :END:
+I'm Sophie! I was born in Oslo in 1999, and after some moving back and forth
+for my studies, I'm back in my home city.
+
+I'm very interested in programming, coffee, natural languages, and music.
+
+Currently, I'm enjoying the wild ride of learning Emacs and preparing to write
+my MSc thesis, which will be on using program inversion to simplify automatic
+testing. By inverting your program, I hope to derive a good generator for you
+that you can feed to QuickCheck to automatically test your program with
+property-based tests :~)
+
+Besides programming languages, I am also known to occasionally nerd out about
+natural languages.
+
+In addition to Norwegian and English, I speak French and
+Italian reasonably well. I wanted to learn French because I have some family in
+France and so I spent a year in Dijon trying to learn some more of the
+language. During my bachelor's degree, I went to Bologna, Italy for an exchange
+semester, where I had some courses in Italian. The Italian skills were doubly
+useful because my French family is from a town bordering Italy, meaning I get
+to practice both languages when I'm visiting.
+

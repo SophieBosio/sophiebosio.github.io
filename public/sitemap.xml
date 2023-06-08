@@ -2,25 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://sophiebosio.github.io/about/</loc>
+    <lastmod>2023-06-08T17:43:00+02:00</lastmod>
+  </url><url>
+    <loc>http://sophiebosio.github.io/about/about/</loc>
+    <lastmod>2023-06-08T17:43:00+02:00</lastmod>
+  </url><url>
+    <loc>http://sophiebosio.github.io/tags/blog/</loc>
+    <lastmod>2023-06-08T17:43:00+02:00</lastmod>
+  </url><url>
+    <loc>http://sophiebosio.github.io/categories/</loc>
+    <lastmod>2023-06-08T17:43:00+02:00</lastmod>
+  </url><url>
+    <loc>http://sophiebosio.github.io/categories/personal/</loc>
+    <lastmod>2023-06-08T17:43:00+02:00</lastmod>
+  </url><url>
+    <loc>http://sophiebosio.github.io/tags/</loc>
+    <lastmod>2023-06-08T17:43:00+02:00</lastmod>
+  </url><url>
     <loc>http://sophiebosio.github.io/education/</loc>
     <lastmod>2023-06-08T14:48:00+02:00</lastmod>
   </url><url>
     <loc>http://sophiebosio.github.io/education/education/</loc>
     <lastmod>2023-06-08T14:48:00+02:00</lastmod>
   </url><url>
-    <loc>http://sophiebosio.github.io/tags/blog/</loc>
-    <lastmod>2023-06-08T12:56:00+02:00</lastmod>
-  </url><url>
-    <loc>http://sophiebosio.github.io/categories/</loc>
-    <lastmod>2023-06-08T12:56:00+02:00</lastmod>
-  </url><url>
     <loc>http://sophiebosio.github.io/posts/monads-haskell/</loc>
     <lastmod>2023-06-08T12:56:00+02:00</lastmod>
   </url><url>
     <loc>http://sophiebosio.github.io/posts/</loc>
-    <lastmod>2023-06-08T12:56:00+02:00</lastmod>
-  </url><url>
-    <loc>http://sophiebosio.github.io/tags/</loc>
     <lastmod>2023-06-08T12:56:00+02:00</lastmod>
   </url><url>
     <loc>http://sophiebosio.github.io/categories/tech/</loc>
@@ -30,9 +39,6 @@
     <lastmod>2023-06-08T12:20:00+02:00</lastmod>
   </url><url>
     <loc>http://sophiebosio.github.io/introduction/</loc>
-    <lastmod>2023-06-08T12:20:00+02:00</lastmod>
-  </url><url>
-    <loc>http://sophiebosio.github.io/categories/personal/</loc>
     <lastmod>2023-06-08T12:20:00+02:00</lastmod>
   </url><url>
     <loc>http://sophiebosio.github.io/posts/hugo/</loc>
