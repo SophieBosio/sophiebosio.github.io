@@ -6,6 +6,9 @@ categories = ["tech"]
 draft = false
 +++
 
+**Please note:** This is a test "post" to see how different formatting in
+Org+Hugo works, it's not a proper or finished post :~)
+
 Monads are a special kind of mathematical structure. Technically (category
 theoretically) speaking, they can be defined quite succintly as "a monoid in
 the category of endofunctors".
