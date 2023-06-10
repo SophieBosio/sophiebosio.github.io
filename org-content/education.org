@@ -13,35 +13,42 @@ The full course plan for the degree can be found at the university's websites,
 but unfortunately, the [[https://www.uib.no/infomedia/154615/tatt-opp-p%C3%A5-kogvit-f%C3%B8r-2022][relevant plan]] (admission in 2019) is only available in
 Norwegian.
 
-Each course page does however have an English version. A brief overview is
-provided below for the reader's convenience.
+Most of the course pages do however have an English version. A brief overview
+with links is
+provided below for the reader's convenience. Programming languages used in the
+courses have been added in parentheses where relevant.
+
+During my BSc, I had an exchange semester at the
+[[https://www.unibo.it/it][University of Bologna]], Italy. The relevant courses from my exchange are appended to the list.
 
 #+begin_details
 #+begin_summary
 Courses in Cognitive Science at UiB
 #+end_summary
-- KOGVIT101 - Introduction to Cognitive Science
-- INF100 - Introduction to Programming (Python)
-- EXFAC00SK - Introduction to Linguistics
-- DASPSTAT - Statistics for Cognition Research
-- LOG110 - Introduction to Formal Logic
-- LOG111 - First-Order Logic
-- INF101 - Introduction to Object-Oriented Programming (Java)
-- LING122 - Languages and Cognition
-- INFO282 - Knowledge Representation and Reasoning (Prolog)
-- INF122 - Introduction to Functional Programming (Haskell)
-- FIL105 - Philosophy of Mind
-- PSYK120 - Cognitive and Biological Psychology
-- EXPHIL-PSSEM - Examen Facultatum in Psychology
-- INFO135 - Algorithms, Data Structures, and Programming
-- MAT111 - Introduction to Calculus
-- INF223 - Category Theory
-- INF227 - Mathematical Logic
-- MAT121 - Linear Algebra
-#+end_details
+- [[https://www.uib.no/emne/KOGVIT101][KOGVIT101]] - Introduction to the Cognitive Sciences
+- [[https://www.uib.no/en/course/INF101][INF100]] - Introduction to Programming (Python)
+- [[https://www.uib.no/en/course/EXFAC00SK][EXFAC00SK]] - Basic Linguistics
+- [[https://www.uib.no/en/course/DASPSTAT][DASPSTAT]] - Statistics for the Cognitive Sciences
+- [[https://www.uib.no/en/course/LOG110][LOG110]] - Introduction to Formal Logic
+- [[https://www.uib.no/en/course/LOG111][LOG111]] - Deduction and Meta-Logic
+- [[https://www.uib.no/en/course/INF101][INF101]] - Object-Oriented Programming (Java)
+- [[https://www.uib.no/en/course/LING122][LING122]] - Languages and Cognition
+- [[https://www.uib.no/emne/INFO282][INFO282]] - Knowledge Representation and Reasoning (Prolog)
+- [[https://www.uib.no/en/course/INF122][INF122]] - Functional Programming (Haskell)
+- [[https://www.uib.no/en/course/FIL105][FIL105]] - Philosophy of Mind
+- [[https://www.uib.no/en/course/PSYK120][PSYK120]] - Biological and Cognitive Psychology
+- [[https://www.uib.no/en/course/EXPHIL-PSSEM][EXPHIL-PSSEM]] - Examen Facultatum in Psychology
+- [[https://www.uib.no/emne/INFO135][INFO135]] - Advanced Programming (Algorithms, Data Structures, and Programming) (Python)
+- [[https://www.uib.no/en/course/INF223][INF223]] - Category Theory
+- [[https://www.uib.no/en/course/INF227][INF227]] - Mathematical Logic
+- [[https://www.uib.no/en/course/MAT121][MAT121]] - Linear Algebra
 
-During my BSc, I had an exchange semester at the
-[[https://www.unibo.it/it][University of Bologna]], Italy.
+And instead of the following courses (left), I had the equivalent courses at
+the University of Bologna (right):
+- MAT111 -> [[https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2021/403275][79184]] - Calculus I
+- INF102 -> [[https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2021/446600][91256]] - Algorithms and Programming (Python)
+- Free credits -> [[https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2021/443719][90106]] - Ingegneria del Software (JavaScript)
+#+end_details
 
 
 ** MSc
@@ -56,11 +63,11 @@ The courses I have taken at UiO are briefly summarised below.
 #+begin_summary
 Courses in Programming and System Architecture at UiO
 #+end_summary
-- IN5130 - Modelling Unassailable IT-Systems
-- IN5170 - Models of Concurrency
-- TEK5510 - Security in Operating Systems and Software
-- IN5570 - Distributed Objects
-- IN5580 - Computability Theory
-- INF5110 - Compiler Construction
+- [[https://www.uio.no/studier/emner/matnat/ifi/IN5130/index-eng.html][IN5130]] - Modelling Unassailable IT-Systems
+- [[https://www.uio.no/studier/emner/matnat/ifi/IN5170/index-eng.html][IN5170]] - Models of Concurrency
+- [[https://www.uio.no/studier/emner/matnat/its/TEK5510/index-eng.html][TEK5510]] - Security in Operating Systems and Software
+- [[https://www.uio.no/studier/emner/matnat/ifi/IN5570/index-eng.html][IN5570]] - Distributed Objects
+- [[https://www.uio.no/studier/emner/matnat/ifi/IN5580/][IN5580]] - Computability Theory
+- [[https://www.uio.no/studier/emner/matnat/ifi/INF5110/][INF5110]] - Compiler Construction
 - Special Curriculum - Advanced Functional Programming, Semantics, and Types
 #+end_details
