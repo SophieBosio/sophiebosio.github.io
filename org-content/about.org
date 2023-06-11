@@ -1,7 +1,7 @@
 #+hugo_base_dir: ../
 #+hugo_section: /
 
-* DONE About                                                 :blog:@personal:
+* DONE About
 CLOSED: [2023-06-08 Thu 17:43]
 :PROPERTIES:
 :EXPORT_FILE_NAME: about
