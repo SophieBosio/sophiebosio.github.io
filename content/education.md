@@ -56,7 +56,7 @@ the University of Bologna (right):
 
 I am currently in the second (and final) year of my master's degree in
 [Programming and System Architecture](https://www.uio.no/studier/program/informatikk-programmering-master/) at the [University of Oslo](https://www.uio.no/), Norway, with the
-software specialisation.
+software specialisation. 🌱
 
 The courses I have taken at UiO are briefly summarised below.
 

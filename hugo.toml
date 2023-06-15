@@ -28,7 +28,7 @@ paginate = 5
     readMore = "Read more"
     readOtherPosts = "Read other posts"
     newerPosts = "Newer posts"
-    olderPosts = "Older posts" 
+    olderPosts = "Older posts"
     minuteReadingTime = "min read"
     # leave empty to disable, enter display text to enable
     # lastModDisplay = ""
