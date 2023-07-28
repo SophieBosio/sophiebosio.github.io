@@ -73,8 +73,7 @@ See `org-capture-templates' for more information."
                  (function org-hugo-new-subtree-post-capture-template))))
 #+end_src
 
-* DONE Monads in Haskell                                         :blog:@tech:
-CLOSED: [2023-06-08 Thu 12:56]
+* TODO Monads in Haskell                                         :blog:@tech:
 :PROPERTIES:
 :EXPORT_FILE_NAME: monads-haskell
 :END:
