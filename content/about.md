@@ -1,5 +1,6 @@
 +++
 title = "About"
+author = ["Sophie"]
 date = 2023-06-08T17:43:00+02:00
 draft = false
 +++
@@ -24,9 +25,11 @@ Italian reasonably well.
 
 I wanted to learn French because I have some family in
 France and so I spent a year in Dijon trying to learn some more of the
-language. During my bachelor's degree, I went to Bologna, Italy for an exchange
+language.
+
+During my bachelor's degree, I went to Bologna, Italy for an exchange
 semester, where I had some courses in Italian. The Italian skills were doubly
 useful because my French family is from a town bordering Italy, meaning I get
 to practice both languages when I'm visiting!
 
-You can reach me via my UiO email at sabosio@uio.no or through my [GitHub](https://github.com/SophieBosio) ✨
+If you want to reach me, you're welcome to do so via my UiO email at sabosio@uio.no or through my [GitHub](https://github.com/SophieBosio) ✨
