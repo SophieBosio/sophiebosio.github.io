@@ -1,5 +1,33 @@
 #+hugo_base_dir: ../
 
+* TODO Fibonacci in Haskell :blog:@tech:
+:PROPERTIES:
+:EXPORT_FILE_NAME: hugo
+:END:
+The Fibonacci sequence is one of - if not /the/ - most famous sequences in
+mathematics. In my first course in functional programming, we learnt recursion
+by writing a function to enumerate the Fibonacci numbers. It looked a little
+something like this:
+
+#+begin_src haskell
+fib :: Integer -> Integer
+fib 1 = 1
+fib 2 = 1
+fib n = fib (n - 1) + fib (n - 2)
+#+end_src
+
+However, in my courses in algorithms and programming, I learnt that this isn't
+really a particularly fast implementation. Try this for yourself, by using the
+above function to enumerate the sequence:
+
+#+begin_src shell
+ghci> map fib [1..]
+#+end_src
+
+And as I got to know people who were more advanced functional programmers, I
+also learnt some neat new tricks. Let's look at a few different implementations
+for Fibonacci numbers.
+
 * DONE Static Site Generation with Hugo                          :blog:@tech:
 CLOSED: [2023-06-08 Thu 12:18]
 :PROPERTIES:
@@ -7,6 +35,8 @@ CLOSED: [2023-06-08 Thu 12:18]
 :END:
 This website is built with [[https://gohugo.io/][Hugo]] and [[https://ox-hugo.scripter.co/][=ox-hugo=]], an exporting engine that lets me
 write my posts in [[https://orgmode.org/][Org mode]] and then put it online easily.
+
+Org mode is a really convenient and smart format that works great for
 
 * DONE Monads in Haskell                                         :blog:@tech:
 CLOSED: [2023-06-08 Thu 12:56]
