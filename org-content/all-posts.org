@@ -1,4 +1,5 @@
 #+hugo_base_dir: ../
+#+title:Blog Posts
 
 * TODO Fibonacci in Haskell :blog:@tech:
 :PROPERTIES:
