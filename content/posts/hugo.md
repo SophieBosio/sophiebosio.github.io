@@ -15,11 +15,10 @@ taking, text editing, and TODO lists/agendas. Moreover, there are a lot of
 convenient features for us Emacs users when using `ox-hugo` to write our blogs
 (besides staying in the comfort of a well-known format and editing flow).
 
-For example, I can use this code snippet as a template to create a new blog post
-and bind it to a key combination in my Emacs configuration:
+For example, I can use this code snippet from [ox-hugo's blog](https://ox-hugo.scripter.co/doc/org-capture-setup/) as a template to
+create a new blog post and bind it to a key combination in my Emacs configuration:
 
 ```emacs-lisp
-;; Populates only the EXPORT_FILE_NAME property in the inserted heading.
 (with-eval-after-load 'org-capture
   (defun org-hugo-new-subtree-post-capture-template ()
     "Returns `org-capture' template string for new Hugo post.
@@ -39,9 +38,6 @@ See `org-capture-templates' for more information."
                '("h"                ;`org-capture' binding + h
                  "Hugo post"
                  entry
-                 ;; It is assumed that below file is present in `org-directory'
-                 ;; and that it has a "Blog Ideas" heading. It can even be a
-                 ;; symlink pointing to the actual location of all-posts.org!
-                 (file+olp "all-posts.org" "Blog Ideas")
+                 (file "~/path/to/your/all-posts.org")
                  (function org-hugo-new-subtree-post-capture-template))))
 ```

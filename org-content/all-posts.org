@@ -1,33 +1,4 @@
 #+hugo_base_dir: ../
-#+title:Blog Posts
-
-* TODO Fibonacci in Haskell :blog:@tech:
-:PROPERTIES:
-:EXPORT_FILE_NAME: hugo
-:END:
-The Fibonacci sequence is one of - if not /the/ - most famous sequences in
-mathematics. In my first course in functional programming, we learnt recursion
-by writing a function to enumerate the Fibonacci numbers. It looked a little
-something like this:
-
-#+begin_src haskell
-fib :: Integer -> Integer
-fib 1 = 1
-fib 2 = 1
-fib n = fib (n - 1) + fib (n - 2)
-#+end_src
-
-However, in my courses in algorithms and programming, I learnt that this isn't
-really a particularly fast implementation. Try this for yourself, by using the
-above function to enumerate the sequence:
-
-#+begin_src shell
-ghci> map fib [1..]
-#+end_src
-
-And as I got to know people who were more advanced functional programmers, I
-also learnt some neat new tricks. Let's look at a few different implementations
-for Fibonacci numbers.
 
 * DONE Static Site Generation with Hugo                          :blog:@tech:
 CLOSED: [2023-06-08 Thu 12:18]
@@ -42,11 +13,10 @@ taking, text editing, and TODO lists/agendas. Moreover, there are a lot of
 convenient features for us Emacs users when using =ox-hugo= to write our blogs
 (besides staying in the comfort of a well-known format and editing flow).
 
-For example, I can use this code snippet as a template to create a new blog post
-and bind it to a key combination in my Emacs configuration:
+For example, I can use this code snippet from [[https://ox-hugo.scripter.co/doc/org-capture-setup/][ox-hugo's blog]] as a template to
+create a new blog post and bind it to a key combination in my Emacs configuration:
 
 #+begin_src emacs-lisp
-;; Populates only the EXPORT_FILE_NAME property in the inserted heading.
 (with-eval-after-load 'org-capture
   (defun org-hugo-new-subtree-post-capture-template ()
     "Returns `org-capture' template string for new Hugo post.
@@ -66,10 +36,7 @@ See `org-capture-templates' for more information."
                '("h"                ;`org-capture' binding + h
                  "Hugo post"
                  entry
-                 ;; It is assumed that below file is present in `org-directory'
-                 ;; and that it has a "Blog Ideas" heading. It can even be a
-                 ;; symlink pointing to the actual location of all-posts.org!
-                 (file+olp "all-posts.org" "Blog Ideas")
+                 (file "~/path/to/your/all-posts.org")
                  (function org-hugo-new-subtree-post-capture-template))))
 #+end_src
 
@@ -221,5 +188,10 @@ But if we try to apply the normal function =f= to =Just x= where =f= is defined
 for the type of =x=, then we should apply =f= to =x= and wrap up the result in
 a =Just=. I.e., if we try to add =5= to =Just 3=, we'll get =Just 8= back, as
 expected!
+
+* TODO Beautifying Emacs Org Mode
+:PROPERTIES:
+:EXPORT_FILE_NAME: beautifying-emacs-org-mode
+:END:
 
 
