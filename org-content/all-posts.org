@@ -1,6 +1,6 @@
 #+hugo_base_dir: ../
 
-* DONE Static Site Generation with Hugo                          :blog:@tech:
+* DONE Static Site Generation with Hugo                          :emacs:@tech:
 CLOSED: [2023-06-08 Thu 12:18]
 :PROPERTIES:
 :EXPORT_FILE_NAME: hugo

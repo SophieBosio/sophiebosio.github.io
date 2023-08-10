@@ -2,7 +2,7 @@
 title = "Static Site Generation with Hugo"
 author = ["Sophie"]
 date = 2023-06-08T12:18:00+02:00
-tags = ["blog"]
+tags = ["emacs"]
 categories = ["tech"]
 draft = false
 +++
