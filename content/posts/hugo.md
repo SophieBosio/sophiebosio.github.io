@@ -18,7 +18,7 @@ convenient features for us Emacs users when using `ox-hugo` to write our blogs
 For example, I can use this code snippet from [ox-hugo's blog](https://ox-hugo.scripter.co/doc/org-capture-setup/) as a template to
 create a new blog post and bind it to a key combination in my Emacs configuration:
 
-```emacs-lisp
+```elisp
 (with-eval-after-load 'org-capture
   (defun org-hugo-new-subtree-post-capture-template ()
     "Returns `org-capture' template string for new Hugo post.
@@ -41,3 +41,6 @@ See `org-capture-templates' for more information."
                  (file "~/path/to/your/all-posts.org")
                  (function org-hugo-new-subtree-post-capture-template))))
 ```
+
+
+## <span class="org-todo todo TODO">TODO</span> Monads in Haskell {#monads-in-haskell}
