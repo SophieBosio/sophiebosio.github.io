@@ -238,8 +238,8 @@ In the regular part of my Emacs config, I set these fonts.
   (set-face-attribute 'default nil :font "Roboto Mono" :height 108)
   (set-face-attribute 'fixed-pitch nil :family "Roboto Mono"))
 
-(when (member "Source Sans 3" (font-family-list))
-  (set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.8))
+(when (member "Source Sans Pro" (font-family-list))
+  (set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.18))
 #+end_src
 
 Then, in the Org-specific part, I resize the Org headings and choose Source Sans
@@ -247,14 +247,14 @@ Pro to be the header font.
 
 #+begin_src emacs-lisp
 ;; Resize Org headings
-(dolist (face '((org-level-1 . 1.4)
-                (org-level-2 . 1.35)
-                (org-level-3 . 1.3)
-                (org-level-4 . 1.2)
-                (org-level-5 . 1.2)
-                (org-level-6 . 1.2)
-                (org-level-7 . 1.2)
-                (org-level-8 . 1.2)))
+(dolist (face '((org-level-1 . 1.35)
+                (org-level-2 . 1.3)
+                (org-level-3 . 1.2)
+                (org-level-4 . 1.1)
+                (org-level-5 . 1.1)
+                (org-level-6 . 1.1)
+                (org-level-7 . 1.1)
+                (org-level-8 . 1.1)))
   (set-face-attribute (car face) nil :font "Source Sans Pro" :weight 'bold :height (cdr face)))
 
 ;; Make the document title a bit bigger
@@ -267,21 +267,23 @@ variable- and fixed-pitch text, we need to make sure that the =org-indent= face
 inherits from =fixed-pitch=.
 
 #+begin_src emacs-lisp
-(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+(require 'org-indent)
+(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 #+end_src
 
 And then, we want to make sure that some parts of the Org document
 always use fixed-pitch even when =variable-pitch-mode= is on.
 
 #+begin_src emacs-lisp
-(set-face-attribute 'org-block nil           :foreground nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-table nil           :inherit 'fixed-pitch)
-(set-face-attribute 'org-formula nil         :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil            :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-verbatim nil        :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil       :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil        :inherit 'fixed-pitch)
+(set-face-attribute 'org-block nil            :foreground nil :inherit
+'fixed-pitch :height 0.85)
+(set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch) :height 0.85)
+(set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch) :height 0.85)
+(set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch) :height 0.85)
+(set-face-attribute 'org-special-keyword nil  :inherit '(font-lock-comment-face
+fixed-pitch))
+(set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
 #+end_src
 
 For this all to come together, we need to make sure that  =variable-pitch-mode= is always active in Org buffers.
@@ -339,6 +341,11 @@ great package for this purpose.
 #+begin_src emacs-lisp
 (add-hook 'org-mode-hook 'olivetti-mode)
 #+end_src
+
+As you can see in the below screenshot, the Org document fills up the left side
+of the screen comfortably even when =olivetti-mode= is on.
+
+[[file:/images/split-screen.png][file:/images/split-screen.png]]
 
 ** Prettier UI Elements
 
