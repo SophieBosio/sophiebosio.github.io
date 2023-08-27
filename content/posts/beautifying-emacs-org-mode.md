@@ -42,10 +42,10 @@ and I use a ligaturised version of it for programming, from the
 [a-better-ligaturizer project](https://github.com/lemeb/a-better-ligaturizer). Here, I'll add that a package such as `ligature.el`
 is required to display the ligatures.
 
-I also think the regular version of Roboto is fine
-for normal text. For the headers etc. I want to use [Source Sans Pro](https://fonts.adobe.com/fonts/source-sans).
+For variable-pitch (regular) text, I want to use [Source Sans Pro](https://fonts.adobe.com/fonts/source-sans).
 
-In the regular part of my Emacs config, I set these fonts.
+In my Emacs config, I have set these fonts outside the Org section, under
+"Interaction, Look &amp; Feel".
 
 ```emacs-lisp
 (when (member "Roboto Mono" (font-family-list))
@@ -56,7 +56,7 @@ In the regular part of my Emacs config, I set these fonts.
   (set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.18))
 ```
 
-Then, in the Org-specific part, I resize the Org headings and choose Source Sans
+Then, back in the Org-specific part of the config, I resize the Org headings and choose Source Sans
 Pro to be the header font.
 
 ```emacs-lisp
@@ -114,19 +114,20 @@ can increase the size like so.
 ```
 
 
-## Decluttering {#decluttering}
+## Decluttering &amp; Text Prettification {#decluttering-and-text-prettification}
 
 We'll declutter by hiding leading starts in headings and emphasis markers (e.g.,
 the slashes in  `/.../` ). We'll also use ["pretty entities"](https://orgmode.org/manual/Special-Symbols.html), which allow us to
 insert special characters LaTeX-style by using a leading backslash (e.g., `\alpha` to
-write the greek letter alpha) and display ellipses in a condensed way.
+write the greek letter alpha). `org-ellipsis` is the symbol displayed after an
+Org-heading that is collapsed - I prefer a simple dot.
 
 ```emacs-lisp
 (setq org-adapt-indentation t
       org-hide-leading-stars t
       org-hide-emphasis-markers t
       org-pretty-entities t
-	  org-ellipsis "…")
+	  org-ellipsis "  ·")
 ```
 
 For source code blocks specifically, I want Org to display the contents using
@@ -164,23 +165,78 @@ of the screen comfortably even when `olivetti-mode` is on.
 {{< figure src="/images/split-screen.png" link="/images/split-screen.png" >}}
 
 
+## Task &amp; Time Tracking {#task-and-time-tracking}
+
+Org mode is also a really powerful tool for tracking tasks and time usage.
+However, the default colours don't go too well with our new look.
+
+Of course, you
+should change the keywords and the number of priorities to suit your tastes. I
+have lifted my colours straight from the official [Nord theme pallette](https://www.nordtheme.com/docs/colors-and-palettes) so that
+they go well with my preferred theme.
+
+Let's set the number of task priorities and specify the colour for each
+priority.
+
+```emacs-lisp
+(setq org-lowest-priority ?F)  ;; Gives us priorities A through F
+(setq org-default-priority ?E) ;; If an item has no priority, it is considered [#E].
+
+(setq org-priority-faces
+      '((65 . "#BF616A")
+        (66 . "#EBCB8B")
+        (67 . "#B48EAD")
+        (68 . "#81A1C1")
+        (69 . "#5E81AC")
+        (70 . "#4C566A")))
+```
+
+And then the keywords and their colours.
+
+```emacs-lisp
+(setq org-todo-keywords
+      '((sequence
+		 "TODO" "PROJECT" "READ" "WAITING"        ; Needs further action
+		 "|"
+		 "IDEA" "CANCELLED" "POSTPONED" "DONE"))) ; Needs no action currently
+
+(setq org-todo-keyword-faces
+      '(("TODO"      :inherit (org-todo region) :foreground "#A3BE8C" :weight bold)
+		("PROJECT"   :inherit (org-todo region) :foreground "#88C0D0" :weight bold)
+        ("READ"      :inherit (org-todo region) :foreground "#8FBCBB" :weight bold)
+		("WAITING"   :inherit (org-todo region) :foreground "#81A1C1" :weight bold)
+		("DONE"      :inherit (org-todo region) :foreground "#30343d" :weight bold)
+		("CANCELLED" :inherit (org-todo region) :foreground "#BF616A" :weight bold)
+		("POSTPONED" :inherit (org-todo region) :foreground "#D08770" :weight bold)
+		("IDEA"      :inherit (org-todo region) :foreground "#EBCB8B" :weight bold)))
+```
+
+Here, you can see a screenshot of these TODOs in action.
+
+{{< figure src="/images/todos.png" link="/images/todos.png" >}}
+
+
 ## Prettier UI Elements {#prettier-ui-elements}
 
-The packages[`org-bullets`](https://github.com/sabof/org-bullets)and[`org-superstar`](https://github.com/integral-dw/org-superstar-mode) are both great for displaying UTF-8
-bullets instead of the normal asterisks of your headings, but I stopped using
-them because the package [`org-modern`](https://github.com/minad/org-modern) does that and so much more. For example,
-this is the package that gives me such pretty source code blocks. Here's my
+I use a combination of  [`org-modern`](https://github.com/minad/org-modern) and [`org-superstar`](https://github.com/integral-dw/org-superstar-mode) to style my UI elements.
+`org-modern` is what gives me such pretty source code blocks, for example. Here's my
 (relatively minimal) setup for it.
 
 ```emacs-lisp
 (use-package org-modern
   :config
   (setq
-   org-auto-align-tags nil
+   org-auto-align-tags t
    org-tags-column 0
    org-fold-catch-invisible-edits 'show-and-error
    org-special-ctrl-a/e t
    org-insert-heading-respect-content t
+
+   ;; Don't style the following
+   org-modern-tag nil
+   org-modern-priority nil
+   org-modern-todo nil
+   org-modern-table nil
 
    ;; Agenda styling
    org-agenda-tags-column 0
@@ -193,6 +249,24 @@ this is the package that gives me such pretty source code blocks. Here's my
    "⭠ now ─────────────────────────────────────────────────")
 
   (global-org-modern-mode))
+```
+
+And here is the setup for `org-superstar`.
+
+```emacs-lisp
+(use-package org-superstar
+  :config
+  (setq org-superstar-leading-bullet " ")
+  (setq org-superstar-special-todo-items t) ;; Makes TODO header bullets into boxes
+  (setq org-superstar-todo-bullet-alist '(("TODO" . 9744)
+                                          ("DONE" . 9744)
+                                          ("READ" . 9744)
+                                          ("IDEA" . 9744)
+                                          ("WAITING" . 9744)
+                                          ("CANCELLED" . 9744)
+                                          ("PROJECT" . 9744)
+                                          ("POSTPONED" . 9744)))
+  )
 ```
 
 
