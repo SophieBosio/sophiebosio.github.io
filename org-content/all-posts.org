@@ -394,6 +394,10 @@ And then the keywords and their colours.
 		("IDEA"      :inherit (org-todo region) :foreground "#EBCB8B" :weight bold)))
 #+end_src
 
+Here, you can see a screenshot of these TODOs in action.
+
+[[file:/images/todos.png][file:/images/todos.png]]
+
 ** Prettier UI Elements
 
 I use a combination of  [[https://github.com/minad/org-modern][=org-modern=]] and [[https://github.com/integral-dw/org-superstar-mode][=org-superstar=]] to style my UI elements.
