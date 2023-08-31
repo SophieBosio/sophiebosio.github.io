@@ -17,6 +17,9 @@ paginate = 5
 
   dateFormat = "02 January 2006"
 
+  [params.meta]
+	favicon = 'true'
+
 [languages]
   [languages.en]
     title = "Sophie Bosio"
