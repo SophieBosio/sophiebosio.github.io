@@ -19,7 +19,7 @@ hope there's something in here that you might want to steal for your own config!
 In case I change these settings later, my most recently updated config is always
 available on my [GitHub](https://github.com/SophieBosio/.emacs.d).
 
-{{< figure src="/images/init-org-screenshot.png" link="/images/init-org-screenshot.png" >}}
+{{< figure src="/img/init-org-screenshot.png" link="/img/init-org-screenshot.png" >}}
 
 
 ## Theme {#theme}
@@ -162,7 +162,7 @@ great package for this purpose.
 As you can see in the below screenshot, the Org document fills up the left side
 of the screen comfortably even when `olivetti-mode` is on.
 
-{{< figure src="/images/split-screen.png" link="/images/split-screen.png" >}}
+{{< figure src="/img/split-screen.png" link="/img/split-screen.png" >}}
 
 
 ## Task &amp; Time Tracking {#task-and-time-tracking}
@@ -213,7 +213,7 @@ And then the keywords and their colours.
 
 Here, you can see a screenshot of these TODOs in action.
 
-{{< figure src="/images/todos.png" link="/images/todos.png" >}}
+{{< figure src="/img/todos.png" link="/img/todos.png" >}}
 
 
 ## Prettier UI Elements {#prettier-ui-elements}
