@@ -1,5 +1,6 @@
 +++
 title = "Introduction"
+author = ["Sophie"]
 date = 2023-06-08T12:20:00+02:00
 tags = ["blog"]
 categories = ["personal"]
@@ -9,7 +10,7 @@ framed = true
 
 Hi! I'm Sophie, a master's student at the University of Oslo.
 
-I'm currently gearing up to write my MSc thesis, which will be about using program
+I'm currently writing my MSc thesis, which is about using program
 inversion to automatically derive good test input generators, hopefully making
 tools such as QuickCheck even more appealing to the average programmer.
 

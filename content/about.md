@@ -10,8 +10,8 @@ for my studies, I'm back in my home city.
 
 I'm very interested in programming, coffee, natural languages, and music.
 
-Currently, I'm enjoying the wild ride of learning Emacs and preparing to write
-my MSc thesis, which will be on using program inversion to simplify automatic
+Currently, I'm enjoying the wild ride of learning Emacs and working on
+my MSc thesis, which about using program inversion to simplify automatic
 testing. By inverting your program, I hope to derive a good test input generator for you
 that you can feed to QuickCheck to automatically test your program with
 property-based tests, without having to write the generator by hand.
