@@ -141,7 +141,7 @@ source code block like it normally would when writing code in that language.
 ```
 
 
-## Centring and Line Breaks {#centring-and-line-breaks}
+## Centring &amp; Line Breaks {#centring-and-line-breaks}
 
 I want the text to fill the screen adaptively, so that long lines of text adapt
 to the size of the window. It also breaks lines instead of truncating them.
