@@ -196,19 +196,17 @@ And then the keywords and their colours.
 ```emacs-lisp
 (setq org-todo-keywords
       '((sequence
-		 "TODO" "PROJECT" "READ" "WAITING"        ; Needs further action
+		 "TODO" "PROJ" "READ" "CHECK" "IDEA" ; Needs further action
 		 "|"
-		 "IDEA" "CANCELLED" "POSTPONED" "DONE"))) ; Needs no action currently
+		 "DONE")))                           ; Needs no action currently
 
 (setq org-todo-keyword-faces
       '(("TODO"      :inherit (org-todo region) :foreground "#A3BE8C" :weight bold)
-		("PROJECT"   :inherit (org-todo region) :foreground "#88C0D0" :weight bold)
+		("PROJ"      :inherit (org-todo region) :foreground "#88C0D0" :weight bold)
         ("READ"      :inherit (org-todo region) :foreground "#8FBCBB" :weight bold)
-		("WAITING"   :inherit (org-todo region) :foreground "#81A1C1" :weight bold)
-		("DONE"      :inherit (org-todo region) :foreground "#30343d" :weight bold)
-		("CANCELLED" :inherit (org-todo region) :foreground "#BF616A" :weight bold)
-		("POSTPONED" :inherit (org-todo region) :foreground "#D08770" :weight bold)
-		("IDEA"      :inherit (org-todo region) :foreground "#EBCB8B" :weight bold)))
+		("CHECK"     :inherit (org-todo region) :foreground "#81A1C1" :weight bold)
+		("IDEA"      :inherit (org-todo region) :foreground "#EBCB8B" :weight bold)
+		("DONE"      :inherit (org-todo region) :foreground "#30343d" :weight bold)))
 ```
 
 Here, you can see a screenshot of these TODOs in action.
