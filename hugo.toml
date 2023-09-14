@@ -5,17 +5,24 @@ theme = 'PaperMod'
 paginate = 5
 
 [params]
-
-  # OS theme is default when not provided, but you can force it to "light" or "dark"
-  defaultTheme = "dark"
-
+  defaultTheme = "auto"
   # if you set this to 0, only submenu trigger will be visible
   showMenuItems = 3
-
   # Show reading time in minutes for posts
   showReadingTime = false
-
+  # Format of dates
   dateFormat = "02 January 2006"
+  
+[params.homeInfoParams]
+	title = "Hi, I'm Sophie"
+    content = "I"
+
+   	# socialIcons: # optional
+    #     - name: "<platform>"
+    #       url: "<link>"
+    #     - name: "<platform 2>"
+    #       url: "<link2>"
+
 
 [languages]
   [languages.en]
@@ -31,7 +38,7 @@ paginate = 5
     olderPosts = "Older posts"
     minuteReadingTime = "min read"
     # leave empty to disable, enter display text to enable
-    # lastModDisplay = ""
+    lastModDisplay = ""
 
     [languages.en.params.logo]
       logoText = "Sophie Bosio"
