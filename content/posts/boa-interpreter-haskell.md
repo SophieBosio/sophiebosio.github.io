@@ -519,7 +519,9 @@ bind each value in `xs` to `x` inside the rest of the comprehension, `c2`.
 Recall the following function types.
 
 `comprehension :: [Clause] -> Boa [Value]`
+
 `bind :: VariableName -> Value -> (Boa a -> Boa a)`
+
 `mapM :: (a -> m b) -> [a] -> m ([b])`
 
 We want to do `bind x v (comprehension c2)`, where `v` is each of the values from `xs`. We
