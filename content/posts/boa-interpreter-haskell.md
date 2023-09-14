@@ -183,7 +183,7 @@ instance Monad Boa where
   ba >>= f = undefined
 ```
 
-Essentially, this says"I don't care about the environment, just give me the
+Essentially, this says "I don't care about the environment, just give me the
 tuple with `a` and no output in it, then put it all inside the Boa monad for me".
 The following notation is semantically equivalent, but the syntax may be easier
 to read depending on what you're used to.
@@ -207,10 +207,10 @@ instance Monad Boa where
   return a = Boa $ const (Right a, [])
   ba >>= f = Boa $ \env ->
     case run ba env of
-      (Left re, out) -> (Left re, out)   -- just return the error
+      (Left re, out) -> (Left re, out)      -- just return the error
       (Right a, out) ->
         let (result, out') = run (f a) env  -- run f a in the environment
-        in  (result, out ++ out')        -- append the new output to the old
+        in  (result, out ++ out')           -- append the new output to the old
 ```
 
 Sweet! Now let's define some operations that let us interact with the monad in a
@@ -318,6 +318,9 @@ and I'd encourage you to try implementing them yourself.
 -   `ListExpression [Expression]`
 -   `ListComprehension Expression [Clause]`
 
+
+### Constant {#constant}
+
 Let's start with `Constant`.
 
 ```haskell
@@ -327,6 +330,9 @@ eval (Constant v) = return v
 It's already a value, so we can just take it and put it directly in the
 monad. Easy!
 
+
+### Variable {#variable}
+
 What about a variable? Well, either it's bound in the environment or it's not
 and should return an error. `look` seems like a perfect fit for the job. It even
 returns an error message for us if `x` is not present in the environment.
@@ -334,6 +340,9 @@ returns an error message for us if `x` is not present in the environment.
 ```haskell
 eval (Variable x) = look x
 ```
+
+
+### Not {#not}
 
 If we meet a `Not` expression, we should evaluate the sub-expression to a Boolean
 value, then take the opposite value, cast it as a `Boolean` and put it in the Boa
@@ -347,6 +356,9 @@ Note that `<$>` is just an infix version of `fmap`, and `truthy` is a helper fun
 eval (Not e) = Boolean . not . truthy <$> eval e
 ```
 
+
+### Operation {#operation}
+
 An `Operation` is performed by evaluating each of its arguments,
 extracting the `Value` from each, using `operate` on them to get the result `Value`,
 and wrapping that result back in the monad. In this case, `do`-notation makes our code much more readable.
@@ -359,6 +371,9 @@ eval (Operation o e1 e2) =
        Right v -> return v
        Left re -> abort $ BadArgument re
 ```
+
+
+### Call {#call}
 
 Recall that `Call` takes a function name `f` and a list of expressions `es`, which is the
 function input. What we want to do, is to evaluate all the function arguments,
@@ -385,6 +400,9 @@ of the monad and send it to the `apply f` function.
 eval (Call f es) = mapM eval es >>= apply f
 ```
 
+
+### List Expression {#list-expression}
+
 We can do something similar for `ListExpression`, except this case is much easier!
 We want to evaluate all the expressions, as above, but then all we need is to
 put the results in a `List` and wrap it in the monad. Then we can just `fmap` `List`
@@ -393,6 +411,9 @@ onto the evaluated expressions.
 ```haskell
 eval (ListExpression es) = List <$> mapM eval es
 ```
+
+
+### List Comprehension {#list-comprehension}
 
 Now, the `ListComprehension` is probably the trickiest case to write. Once way is to write
 two mutually recursive functions, the `eval` case for `ListComprehension` and a
@@ -454,17 +475,11 @@ eval (ListComprehension e1 c1) = List <$> comprehension c1
     comprehension (For x e2 : c2) = undefined
 ```
 
-<style>.org-center { margin-left: auto; margin-right: auto; text-align: center; }</style>
-
-<div class="org-center">
-
-Recall that the result of evaluating a list comprehension should be on the form
-`Boa (List [Value])`, which (because `List [Value]` is itself a `Value`) is just a `Boa
-Value`. When we return from `comprehension` to `eval`, we can `fmap` the constructor `List` onto
-the `Boa [Value]`, which accomplishes exactly this: It turns the result `Boa [Value]` into
-`Boa (List [Value])`.
-
-</div>
+> Recall that the result of evaluating a list comprehension should be on the form
+> `Boa (List [Value])`, which (because `List [Value]` is itself a `Value`) is just a `Boa
+> Value`. When we return from `comprehension` to `eval`, we can `fmap` the constructor `List` onto
+> the `Boa [Value]`, which accomplishes exactly this: It turns the result `Boa [Value]` into
+> `Boa (List [Value])`.
 
 When we encounter an `If`-expression, the syntax corresponds to `e1 if e2` . So we
 know that the expression `e2` should be a Boolean value. Luckily, in Boa as in
@@ -503,14 +518,9 @@ bind each value in `xs` to `x` inside the rest of the comprehension, `c2`.
 
 Recall the following function types.
 
-=comprehension
-: [Clause] -&gt; Boa [Value]=
-
-=bind
-: VariableName -&gt; Value -&gt; (Boa a -&gt; Boa a)=
-
-=mapM
-: (a -&gt; m b) -&gt; [a] -&gt; m ([b])=
+`comprehension :: [Clause] -> Boa [Value]`
+`bind :: VariableName -> Value -> (Boa a -> Boa a)`
+`mapM :: (a -> m b) -> [a] -> m ([b])`
 
 We want to do `bind x v (comprehension c2)`, where `v` is each of the values from `xs`. We
 already have the variable name `x` and the comprehension `c2`, but `bind` needs a
@@ -548,16 +558,10 @@ eval (ListComprehension e1 c1) = List <$> comprehension c1
                         "Argument " ++ showValue v2 ++ " is not iterable"
 ```
 
-<style>.org-center { margin-left: auto; margin-right: auto; text-align: center; }</style>
-
-<div class="org-center">
-
-If `eval` and `comprehension` look completely crazy to you - especially if you're
-wondering how we can use `e1` inside of `comprehension` - I'd recommend reading
-about _closures_ and _mutually recursive_ functions. It's really powerful stuff, but
-I was definitely confused the first time I saw it!
-
-</div>
+> If `eval` and `comprehension` look completely crazy to you - especially if you're
+> wondering how we can use `e1` inside of `comprehension` - I'd recommend reading
+> about _closures_ and _mutually recursive_ functions. It's really powerful stuff, but
+> I was definitely confused the first time I saw it!
 
 
 ## Putting It All Together {#putting-it-all-together}
