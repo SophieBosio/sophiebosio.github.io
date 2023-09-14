@@ -118,7 +118,7 @@ a.button {
   outline: none;
   /* variants */
   /* sizes */ }
-  button.outline,
+v  button.outline,
   .button.outline,
   a.button.outline {
     background: transparent;
