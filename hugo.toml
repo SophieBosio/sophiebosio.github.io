@@ -57,7 +57,7 @@ paginate = 5
 
 # Syntax highlighting!
 [markup.highlight]
-	# style = nord
+	style = nord
 	codeFences = true
 	guessSyntax = true
 	hl_Lines = ""

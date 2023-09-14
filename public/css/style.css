@@ -442,7 +442,7 @@ figure {
       text-align: right; }
 
 code, kbd {
-  font-family: Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;
+  font-family: Roboto Mono,Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;
   background: var(--background-secondary);
   padding: 1px 6px;
   margin: 0 2px;
@@ -816,7 +816,7 @@ https://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+cli
 code[class*="language-"],
 pre[class*="language-"] {
   background: none;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-family: 'Roboto Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
