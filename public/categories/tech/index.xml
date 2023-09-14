@@ -1,60 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>tech on Sophie Bosio</title>
-    
-    
-    
-    <link>http://sophiebosio.github.io/categories/tech/</link>
-    <description>Recent content in tech on Sophie Bosio</description>
+    <title>tech on PaperMod</title>
+    <link>https://sophiebosio.github.io/categories/tech/</link>
+    <description>Recent content in tech on PaperMod</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>Copyright (c) Sophie Bosio 2023</copyright>
-    <lastBuildDate>Thu, 08 Jun 2023 12:56:00 +0200</lastBuildDate>
-    
-	<atom:link href="http://sophiebosio.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 10 Aug 2023 22:19:00 +0200</lastBuildDate><atom:link href="https://sophiebosio.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Monads in Haskell</title>
-      <link>http://sophiebosio.github.io/posts/monads-haskell/</link>
-      <pubDate>Thu, 08 Jun 2023 12:56:00 +0200</pubDate>
+      <title>Beautifying Emacs Org Mode</title>
+      <link>https://sophiebosio.github.io/posts/beautifying-emacs-org-mode/</link>
+      <pubDate>Thu, 10 Aug 2023 22:19:00 +0200</pubDate>
       
-      <guid>http://sophiebosio.github.io/posts/monads-haskell/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          Please note: This is a test &amp;ldquo;post&amp;rdquo; to see how different formatting in Org+Hugo works, it&amp;rsquo;s not a proper or finished post :~)
-Monads are a special kind of mathematical structure. Technically (category theoretically) speaking, they can be defined quite succintly as &amp;ldquo;a monoid in the category of endofunctors&amp;rdquo;.
-But what exactly does that mean? That question has been posed to Google by many a beginner to functional programming. And that in turn, is because monads are a very useful structure that actually makes our lives as functional programmer significantly easier!
-          
-        
-        </description>
+      <guid>https://sophiebosio.github.io/posts/beautifying-emacs-org-mode/</guid>
+      <description>In my opinion, the power of Emacs is that you&amp;rsquo;re able to program your own working environment. Other editors may be just as, or possibly more, efficient to use, but I haven&amp;rsquo;t come across any that give you control over as many aspects of your editor as Emacs does. Customising and tweaking your configuration may be an endless endeavour, but it&amp;rsquo;s also a highly rewarding one.
+All that being said, I was inspired to tweak the look of my Org Mode setup, especially after reading this post.</description>
     </item>
     
     <item>
       <title>Static Site Generation with Hugo</title>
-      <link>http://sophiebosio.github.io/posts/hugo/</link>
+      <link>https://sophiebosio.github.io/posts/hugo/</link>
       <pubDate>Thu, 08 Jun 2023 12:18:00 +0200</pubDate>
       
-      <guid>http://sophiebosio.github.io/posts/hugo/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          This website is built with Hugo and ox-hugo, an exporting engine that lets me write my posts in Org mode and then put it online easily.
-          
-        
-        </description>
+      <guid>https://sophiebosio.github.io/posts/hugo/</guid>
+      <description>This website is built with Hugo and ox-hugo, an exporting engine that lets me write my posts in Org mode and then put it online easily.
+Org mode is a really clever and powerful plain text format that works great for note taking, text editing, and TODO lists/agendas. Moreover, there are a lot of convenient features for us Emacs users when using ox-hugo to write our blogs (besides staying in the comfort of a well-known format and editing flow).</description>
     </item>
     
   </channel>

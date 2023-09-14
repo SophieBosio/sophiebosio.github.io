@@ -1,7 +1,7 @@
 baseURL: "https://sophiebosio.github.io/"
 title: PaperMod
 paginate: 5
-theme: hugo-PaperMod
+theme: PaperMod
 
 enableInlineShortcodes: true
 enableRobotsTXT: true
@@ -68,7 +68,7 @@ params:
     homeInfoParams:
         Title: "Hi! I'm Sophie, a master's student at the University of Oslo."
         Content: >
-          - I'm currently writing my MSc thesis
+          I'm currently writing my MSc thesis
           - on using program inversion to automatically derive good
           - test input generators for functional languages.
           - Besides functional programming, I'm a (budding) Emacs
