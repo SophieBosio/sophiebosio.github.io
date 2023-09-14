@@ -1,7 +1,7 @@
 baseURL = 'http://sophiebosio.github.io/'
 languageCode = 'en-us'
 title = 'Sophie Bosio'
-theme = 'hello-friend'
+theme = 'PaperMod'
 paginate = 5
 
 [params]
