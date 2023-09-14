@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>emacs on PaperMod</title>
+    <link>https://sophiebosio.github.io/tags/emacs/</link>
+    <description>Recent content in emacs on PaperMod</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 10 Aug 2023 22:19:00 +0200</lastBuildDate><atom:link href="https://sophiebosio.github.io/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Beautifying Emacs Org Mode</title>
+      <link>https://sophiebosio.github.io/posts/beautifying-emacs-org-mode/</link>
+      <pubDate>Thu, 10 Aug 2023 22:19:00 +0200</pubDate>
+      
+      <guid>https://sophiebosio.github.io/posts/beautifying-emacs-org-mode/</guid>
+      <description>In my opinion, the power of Emacs is that you&amp;rsquo;re able to program your own working environment. Other editors may be just as, or possibly more, efficient to use, but I haven&amp;rsquo;t come across any that give you control over as many aspects of your editor as Emacs does. Customising and tweaking your configuration may be an endless endeavour, but it&amp;rsquo;s also a highly rewarding one.
+All that being said, I was inspired to tweak the look of my Org Mode setup, especially after reading this post.</description>
+    </item>
+    
+    <item>
+      <title>Static Site Generation with Hugo</title>
+      <link>https://sophiebosio.github.io/posts/hugo/</link>
+      <pubDate>Thu, 08 Jun 2023 12:18:00 +0200</pubDate>
+      
+      <guid>https://sophiebosio.github.io/posts/hugo/</guid>
+      <description>This website is built with Hugo and ox-hugo, an exporting engine that lets me write my posts in Org mode and then put it online easily.
+Org mode is a really clever and powerful plain text format that works great for note taking, text editing, and TODO lists/agendas. Moreover, there are a lot of convenient features for us Emacs users when using ox-hugo to write our blogs (besides staying in the comfort of a well-known format and editing flow).</description>
+    </item>
+    
+  </channel>
+</rss>

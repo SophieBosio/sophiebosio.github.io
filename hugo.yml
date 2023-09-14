@@ -1,0 +1,135 @@
+baseURL: "https://sophiebosio.github.io/"
+title: Sophie Bosio
+paginate: 5
+theme: PaperMod
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+pygmentsUseClasses: true
+
+minify:
+    disableXML: true
+
+languages:
+    en:
+        languageName: "English"
+        weight: 1
+        taxonomies:
+          category: categories
+          tag: tags
+          series: series
+        menu:
+            main:
+                - name: About
+                  url: about
+                  weight: 5
+                - name: Education
+                  url: education
+                  weight: 10
+                - name: Search
+                  url: search/
+                  weight: 15
+                - name: Tags
+                  url: tags/
+                  weight: 20
+                - name: GitHub
+                  url: https://github.com/SophieBosio
+                  weight: 25
+
+outputs:
+    home:
+        - HTML
+        - RSS
+        - JSON
+
+params:
+    env: production # to enable google analytics, opengraph, twitter-cards and schema.
+    description: "Blog - Sophie Bosio"
+    author: Sophie Bosio
+
+    defaultTheme: auto
+    # disableThemeToggle: true
+    ShowShareButtons: true
+    ShowReadingTime: true
+    # disableSpecial1stPost: true
+    displayFullLangName: true
+    ShowPostNavLinks: true
+    ShowBreadCrumbs: true
+    ShowCodeCopyButtons: true
+    ShowRssButtonInSectionTermList: true
+    ShowToc: true
+    # comments: false
+    # images: ["papermod-cover.png"]
+
+    homeInfoParams:
+        Title: "Hi! I'm Sophie, a master's student at the University of Oslo."
+        Content: >
+          I'm currently writing my MSc thesis
+          on using program inversion to automatically derive good
+          test input generators for functional languages.
+          
+          Besides functional programming, I'm a (budding) Emacs
+          enthusiast with an above-average interest in coffee.
+          When I'm not learning programming languages,
+          I like to try my hand at learning natural ones. 🌱
+
+    socialIcons:
+        - name: github
+          url: "https://github.com/SophieBosio"
+        - name: email
+          url: "mailto:sophie.bosio@outlook.com"
+        - name: Rss
+          url: "index.xml"
+
+    assets:
+        disableHLJS: true
+        favicon: "/static/img/favicon.png"
+        favicon16x16: "/static/img/favicon.png"
+        favicon32x32: "/static/img/favicon.png"
+        apple_touch_icon: "/static/img/favicon.png"
+        safari_pinned_tab: "/static/img/favicon.png"
+
+    fuseOpts:
+        isCaseSensitive: false
+        shouldSort: true
+        location: 0
+        distance: 1000
+        threshold: 0.4
+        minMatchCharLength: 0
+        # limit: 10 # refer: https://www.fusejs.io/api/methods.html#search
+        keys: ["title", "permalink", "summary", "content"]
+
+markup:
+    goldmark:
+        renderer:
+            unsafe: true
+    highlight:
+        noClasses: false
+
+privacy:
+    vimeo:
+        disabled: false
+        simple: true
+
+    twitter:
+        disabled: false
+        enableDNT: true
+        simple: true
+
+    instagram:
+        disabled: false
+        simple: true
+
+    youtube:
+        disabled: false
+        privacyEnhanced: true
+
+services:
+    instagram:
+        disableInlineCSS: true
+    twitter:
+        disableInlineCSS: true

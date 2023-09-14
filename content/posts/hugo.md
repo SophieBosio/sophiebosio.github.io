@@ -42,5 +42,3 @@ See `org-capture-templates' for more information."
                  (function org-hugo-new-subtree-post-capture-template))))
 ```
 
-
-## <span class="org-todo todo TODO">TODO</span> Monads in Haskell {#monads-in-haskell}
