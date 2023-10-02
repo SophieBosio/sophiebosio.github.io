@@ -6,26 +6,291 @@ tags = ["functional", "programming", "haskell", "monads"]
 draft = false
 +++
 
-Monads are a special kind of mathematical structure that make our lives as
-functional programmers much easier. They allow us to perform _stateful_ computations
-in a _functional_ way. In a way, they preserve _context_.
+Monads are extremely useful and notoriously hard to wrap your head around the
+first time around. The formal definition, "a monoid in the category of
+endofunctors",  doesn't really help the average person much.
 
-You're bound to have seen a monad if you've ever used Haskell, since the main
-function usually uses the `IO` monad. And so does every other function
-you'll use that just prints or reads something to/from the console.
+A monad is essentially a way to perform a computation with some added
+_context_ in a functional way. Personally, I had the most luck starting with _how_
+to use monads in functional programming, and as I got better at using them, I
+would re-read the definitions and slowly feel like I started to understand them.
 
-But what exactly is a monad? That question has been posed to Google by many
-a beginner to functional programming. Usually, the results will include the
-formal definition: "A monoid in the category of endofunctors." Which doesn't
-really help the average person much.
+First, I'll give a brief introduction to monads, using the `List` monad as an example.
 
-Personally, I had the most luck starting with _how_ to use monads in functional
-programming, and as I got better at using them, I would re-read the definitions
-and slowly feel like I started to understand them.
+Then, to explain why we might want to use monads, I'll reproduce a famous example:
+Using the Writer monad to perform logging.
 
-We'll look at a common monad that you might already be familiar with: The `Maybe` monad.
+And finally, to cover more of the theory behind monads, we'll have a look at the `Maybe`
+monad in Haskell.
 
-To have a something to re-read and hopefully understand later, let's look at some definitions and introduce some terminology:
+
+## Wait, List is a Monad? {#wait-list-is-a-monad}
+
+Yes! Remember that a monad is a structure that lets us perform a computation with some added
+_context_. For a list, that context is the ordering and number of the elements.
+
+Let's say you want to map a function `f` over a list `xs`. All well and great, but
+you can't just do it any way you like: You have to map the function over _all_ the
+elements and preserve their _order_! So somehow, the context of the list carries
+over into the next computation you want to do on it!
+
+I also find it useful to think of monads as "containers" or boxes
+around values.
+
+An integer value isn't a singleton list by itself, so we have to
+_return_ the value to put it inside the container - which I think of as "wrapping"
+the value. E.g., wrapping `5` in `[]` to make it the singleton list `[5]`.
+
+The containers also prevent us from accessing the values directly, so we have to
+_extract_ them somehow - which I think of as unwrapping them. E.g., I can't do
+`[5] + 3` because I'm trying to add a list of integers to an integer, but I
+_can_ do `([5] !! 0) + 3` because now I'm adding an integer to another integer.
+
+So, monads allow us to perform computations with context in a functional way.
+What's so special about that? Well, the number of elements and ordering of the list, depends on the
+list itself! So, it's almost like the list has a _state_. But we normally can't do _stateful_ computations in a _functional_ language, right?
+And yet, it's still functional, because all the computations on lists return the same
+results each time they are called _in the same context_, i.e., on the same list.
+
+> For later, remember that a monad needs a way to put a normal value _into_ the
+> monad, and a way to extract a normal value _out of_ the monad.
+
+
+## Writer Monad to the Rescue! {#writer-monad-to-the-rescue}
+
+Now we'll have a look at the [Writer](https://hackage.haskell.org/package/mtl/docs/Control-Monad-Writer.html) monad, a commonly used monad
+that will hopefully illustrate the concepts more clearly.
+
+The **Writer** monad is often used for logging.
+
+Let's say you have a function that adds two ints and a function that squares
+ints. Then you want to add a log statement for each computation, so that you can
+review the log later.
+
+In an imperative language, you might add a global
+variable, but then all your functions depend on this one variable. You could
+pass the list as argument and return it as output, but then your `add` function
+suddenly also takes a weird, extra log argument. Instead, you
+could return a tuple, containing first the result of the computation and then
+the log so far. We could do that in Haskell as well. Let's define a new type
+`LoggedInt` that contains an integer and a list of strings, which will be our
+log. Then `add` and `square` can return this type!
+
+```haskell
+type LoggedInt = (Int, [String])
+
+add :: Int -> Int -> LoggedInt
+add n m = (n + m,
+           ["Added " ++ show n ++ " to " ++ show m])
+
+square :: Int -> LoggedInt
+square n = (n^2,
+            ["Squared " ++ show n])
+```
+
+But now, you can't really chain these together, because both functions take
+normal ints and return these weird `LoggedInt` values.
+
+```shell
+ghci> square(add 2 4)
+
+<interactive>:11:8: error:
+    • Couldn't match type ‘(Int, [String])’ with ‘Int’
+      Expected: Int
+        Actual: LoggedInt
+    • In the first argument of ‘square’, namely ‘(add 2 4)’
+      In the expression: square (add 2 4)
+      In an equation for ‘it’: it = square (add 2 4)
+```
+
+Also, there is no way to access and extend the previous log, since each
+computation just returns the singleton list with their log statement.
+
+```haskell
+ghci> add 2 4
+(6,["Added 2 to 4"])
+
+ghci> square(2)
+(4,["Squared 2"])
+```
+
+Of course, we could make both the functions take `LoggedInt` values. But that's
+pretty much equivalent to passing the list as argument and returning it as output.
+
+```haskell
+type LoggedInt = (Int, [String])
+
+add :: LoggedInt -> LoggedInt -> LoggedInt
+add (n, log1) (m, log2) =
+  (n + m,
+   log1 ++ log2 ++ ["Added " ++ show n ++ " to " ++ show m])
+
+square :: LoggedInt -> LoggedInt
+square (n, log) =
+  (n^2,
+   log ++ ["Squared " ++ show n])
+```
+
+What to do? Well, if we squint, we can see that we have another context (the
+previously logged material) that we want to use in our computation, and we want
+to return a result that has the updated context (the old logs plus the new log
+statement)!
+
+This is exactly the kind of thing monads are built for! Let's implement the
+Writer monad from scratch together.
+
+The type of monad we want, is basically an instance of the `Writer` monad in
+Haskell. Let's call ours `LogWriter`.
+
+The results of our computations are going to be inside the `LogWriter` monad from now on.
+Right off the bat, we want a way to take a computation wrapped in the monad and
+_unwrap_ it. That's usually called _running_ the monad, so let's define
+`LogWriter` with a function called `run` that just unwraps the computation and
+gives us the result and the log as a pair.
+
+```haskell
+newtype LogWriter l a = LogWriter { run :: (a, l) }
+```
+
+`l` is the type of the logs and `a` is the type of the result of the
+computation. Since we want to be able to concatenate (possibly empty) logs, `l`
+must be a member of the `Monoid` type class.
+
+Let's take the old versions of our functions, that take normal integers and
+return integers with logs, only now they'll be inside the `LogWriter` monad. The
+`LogWriter` contains the list of strings (logs) and an integer (result).
+
+```haskell
+newtype LogWriter l a = LogWriter { run :: (a, l) }
+
+add :: Int -> Int -> LogWriter [String] Int
+add n m = undefined
+
+square :: Int -> LogWriter [String] Int
+square n = undefined
+```
+
+Like we saw earlier, a monad needs a way of putting a normal value (here, an int) into the
+container (here, an int with a log). In Haskell, this is called `return`. We want to find
+the "simplest", most straightforward way of taking a normal value and putting
+into the monad.
+
+In our case, that would be returning the value and the empty
+list. But since we specified that `l` should be a monoid, and not a list in
+particular, we can't use `[]` for the empty list. Instead, we can use `mempty`
+which corresponds to the empty list, but works for all monoids!
+
+```haskell
+instance (Monoid l) => Monad (LogWriter l) where
+  return a = LogWriter (a, mempty)
+```
+
+Then we need a way to extract a value _out of_ the monad, so that we can use it to
+perform computations (such as squaring it) and then putting it _back into_ the
+monad. Unwrapping, computing, and wrapping! This is called the "bind" operator
+and in Haskell, it is written as `>>=`.
+
+> Note that it takes a wrapped value `m a` and a function that takes a _normal_
+> value and returns a _wrapped_ value again `(a -> m b)`. So we can't just take
+> any normal function `a -> b` and bring it into monad-land using the bind
+> operator - but we'll see later that there is a function that does exactly that,
+> called `fmap`!
+
+Of course, what we want to do is to apply `f` to the value `a` inside the monad,
+and return the `result` of that computation. Additionally, we want to take any
+new output and append it to the existing logs, and return that as well.
+
+```haskell
+instance (Monoid l) => Monad (LogWriter l) where
+  return a = LogWriter (a, mempty)
+  (LogWriter (a, logs)) >>= f =
+    let (LogWriter (result, output)) = f a
+    in   LogWriter (result, logs <> output)
+```
+
+Finally, every monad is an applicative functor, and in turn a normal functor.
+Therefore, we need to make our monad an instance of those typeclasses as well.
+We'll cover how this works in the section about `Maybe`, but for now, you can
+copy these instance declarations to make GHC happy and accept our `LogWriter`
+into the monad family.
+
+```haskell
+import Control.Monad
+
+instance (Monoid l) => Applicative (LogWriter l) where
+  pure  = return
+  (<*>) = ap
+
+instance (Monoid l) => Functor (LogWriter l) where
+  fmap  = liftM
+```
+
+Now we can rewrite `add` and `square` to return values inside the `LogWriter`
+monad!
+
+```haskell
+import Control.Monad
+
+newtype LogWriter l a = LogWriter { run :: (a, l) }
+
+instance (Monoid l) => Monad (LogWriter l) where
+  return a = LogWriter (a, mempty)
+  (LogWriter (a, logs)) >>= f =
+    let (LogWriter (result, output)) = f a
+    in   LogWriter (result, logs <> output)
+
+instance (Monoid l) => Applicative (LogWriter l) where
+  pure  = return
+  (<*>) = ap
+
+instance (Monoid l) => Functor (LogWriter l) where
+  fmap = liftM
+
+add :: Int -> Int -> LogWriter [String] Int
+add n m = LogWriter (n + m, ["Added " ++ show n ++ " to " ++ show m])
+
+square :: Int -> LogWriter [String] Int
+square n = LogWriter (n^2, ["Squared " ++ show n])
+```
+
+And finally, perform monadic operation that keep track of the log the whole way!
+Since the result of `add` and `square` is now values within the `LogWriter`, we
+have to remember to `run` the monad so we get a nice, printable result.
+
+```shell
+ghci> add 5 3   # Gives us values INSIDE the monad!
+
+<interactive>:126:1: error:
+    • No instance for (Show (LogWriter [String] Int))
+        arising from a use of ‘print’
+    • In a stmt of an interactive GHCi command: print it
+
+ghci> run (add 5 3)
+(8,["Added 5 to 3"])
+
+ghci> run (square 2)
+(4,["Squared 2"])
+```
+
+We can even chain computations using the `>>` operator, which lets us perform an
+operation, ignore the result, and perform the next operation. In these two examples, we see the
+result of the last computation in the chain, `add 4 5`, and the total log.
+
+```shell
+ghci> run $ add 6 3 >> square 2 >> add 4 5
+(9,["Added 6 to 3","Squared 2","Added 4 to 5"])
+
+ghci> run $ add 5 10 >> square (fst $ run $ add 3 2) >> square 2 >> add 4 5
+(9,["Added 5 to 10","Squared 5","Squared 2","Added 4 to 5"])
+```
+
+
+## `Maybe` We'll Get A Value {#maybe-we-ll-get-a-value}
+
+Time for some theory! Hopefully, with the context of the previous examples, this
+will feel mostly familiar.
+
+As mentioned, we'll be looking at _applicatives_ and _functors_. Let's look at some definitions and introduce some terminology:
 
 > Every **monad** is an **applicative functor**, and every applicative functor is a
 > normal **functor**.
@@ -36,7 +301,7 @@ which in turn is a special functor.
 Let's start at the lowest level, **functors**, and work our way up.
 
 
-## Functors {#functors}
+### Functors {#functors}
 
 Formally, a functor is a transformation that maps all the objects (values) in a category
 to objects in another, and all the morphisms (functions) in a category to
@@ -172,7 +437,7 @@ instance Functor ((->) r) where
 </details>
 
 
-## Applicatives {#applicatives}
+### Applicatives {#applicatives}
 
 An applicative functor has more structure than a regular functor, but less than
 a monad.
@@ -256,7 +521,7 @@ instance Applicative ZipList where
 </details>
 
 
-## Monads {#monads}
+### Monads {#monads}
 
 Finally, we get to monads! At this point, remember that you can use all the same
 functions on monads as you could on functors and applicative functions.
@@ -268,7 +533,8 @@ context. Monads also allow us to preserve context, but also allow
 us to use functions that take a value _without_ context and return a value _with_
 context.
 
-A monad has the following operations.
+A monad has the following operations. A minimal complete definition requires us
+to write return and bind ourselves.
 
 ```haskell
 class Monad m where
@@ -280,7 +546,7 @@ class Monad m where
 	fail msg =  error msg
 ```
 
-The most interesting function we need for a monad is the "bind" operator, `>>=`.
+The most interesting function we need for a monad is the bind operator, `>>=`.
 
 Compare this to `fmap` and `<*>`:
 
