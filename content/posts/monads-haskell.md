@@ -80,12 +80,10 @@ log. Then `add` and `square` can return this type!
 type LoggedInt = (Int, [String])
 
 add :: Int -> Int -> LoggedInt
-add n m = (n + m,
-           ["Added " ++ show n ++ " to " ++ show m])
+add n m = (n + m, ["Added " ++ show n ++ " to " ++ show m])
 
 square :: Int -> LoggedInt
-square n = (n^2,
-            ["Squared " ++ show n])
+square n = (n^2, ["Squared " ++ show n])
 ```
 
 But now, you can't really chain these together, because both functions take
@@ -122,13 +120,11 @@ type LoggedInt = (Int, [String])
 
 add :: LoggedInt -> LoggedInt -> LoggedInt
 add (n, log1) (m, log2) =
-  (n + m,
-   log1 ++ log2 ++ ["Added " ++ show n ++ " to " ++ show m])
+  (n + m, log1 ++ log2 ++ ["Added " ++ show n ++ " to " ++ show m])
 
 square :: LoggedInt -> LoggedInt
 square (n, log) =
-  (n^2,
-   log ++ ["Squared " ++ show n])
+  (n^2, log ++ ["Squared " ++ show n])
 ```
 
 What to do? Well, if we squint, we can see that we have another context (the
@@ -157,7 +153,7 @@ computation. Since we want to be able to concatenate (possibly empty) logs, `l`
 must be a member of the `Monoid` type class.
 
 Let's take the old versions of our functions, that take normal integers and
-return integers with logs, only now they'll be inside the `LogWriter` monad. The
+return integers with logs, and rewrite them so return values inside the `LogWriter` monad. The
 `LogWriter` contains the list of strings (logs) and an integer (result).
 
 ```haskell
