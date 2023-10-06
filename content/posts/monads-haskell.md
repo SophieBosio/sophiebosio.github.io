@@ -27,12 +27,13 @@ monad in Haskell.
 ## Wait, List is a Monad? {#wait-list-is-a-monad}
 
 Yes! Remember that a monad is a structure that lets us perform a computation with some added
-_context_. For a list, that context is the ordering and number of the elements.
+_context_. For a list, that context is what _elements_ are in the list (including
+duplicates) and their _order_.
 
 Let's say you want to map a function `f` over a list `xs`. All well and great, but
 you can't just do it any way you like: You have to map the function over _all_ the
-elements and preserve their _order_! So somehow, the context of the list carries
-over into the next computation you want to do on it!
+elements and preserve their order! So somehow, the context of the list carries
+over into the next computation you want to do on it.
 
 I also find it useful to think of monads as "containers" or boxes
 around values.
