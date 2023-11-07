@@ -3,7 +3,6 @@ title = "Beautifying Emacs Org Mode"
 author = ["Sophie"]
 date = 2023-08-10T22:19:00+02:00
 tags = ["emacs"]
-categories = ["tech"]
 draft = false
 +++
 
@@ -114,10 +113,9 @@ can increase the size like so.
 ```
 
 
-## Decluttering &amp; Text Prettification {#decluttering-and-text-prettification}
+## Decluttering {#decluttering}
 
-We'll declutter by hiding leading starts in headings and emphasis markers (e.g.,
-the slashes in  `/.../` ). We'll also use ["pretty entities"](https://orgmode.org/manual/Special-Symbols.html), which allow us to
+We'll use ["pretty entities"](https://orgmode.org/manual/Special-Symbols.html), which allow us to
 insert special characters LaTeX-style by using a leading backslash (e.g., `\alpha` to
 write the greek letter alpha). `org-ellipsis` is the symbol displayed after an
 Org-heading that is collapsed - I prefer a simple dot.
@@ -125,7 +123,6 @@ Org-heading that is collapsed - I prefer a simple dot.
 ```emacs-lisp
 (setq org-adapt-indentation t
       org-hide-leading-stars t
-      org-hide-emphasis-markers t
       org-pretty-entities t
 	  org-ellipsis "  ·")
 ```
@@ -138,6 +135,54 @@ source code block like it normally would when writing code in that language.
 (setq org-src-fontify-natively t
 	  org-src-tab-acts-natively t
       org-edit-src-content-indentation 0)
+```
+
+It's common to hide emphasis markers (e.g., `/.../` for italics, `*...*` for bold,
+etc.) to have a cleaner visual look, but this makes it harder to edit the text.
+[org-appear](https://github.com/awth13/org-appear) is the solution to all my troubles. It displays the markers when the
+cursor is within them and hides them otherwise, making edits easy while looking
+pretty.
+
+```emacs-lisp
+(use-package org-appear
+  :commands (org-appear-mode)
+  :hook     (org-mode . org-appear-mode)
+  :config
+  (setq org-hide-emphasis-markers t)  ; Must be activated for org-appear to work
+  (setq org-appear-autoemphasis   t   ; Show bold, italics, verbatim, etc.
+        org-appear-autolinks      t   ; Show links
+		org-appear-autosubmarkers t)) ; Show sub- and superscripts
+```
+
+And finally, I have some Org options to deal with headers and TODO's nicely.
+
+```emacs-lisp
+(setq org-log-done                       t
+	  org-auto-align-tags                t
+	  org-tags-column                    -80
+	  org-fold-catch-invisible-edits     'show-and-error
+	  org-special-ctrl-a/e               t
+	  org-insert-heading-respect-content t)
+```
+
+
+## LaTeX Previews {#latex-previews}
+
+The LaTeX previews in Org mode are pretty small by default, so I'll increase
+their size a little.
+
+```emacs-lisp
+(plist-put org-format-latex-options :scale 1.35)
+```
+
+[org-fragtog](https://github.com/io12/org-fragtog) works like org-appear, but for LaTeX fragments: It toggles LaTeX
+previews on and off automatically, depending on the cursor position. If you move the
+cursor to a preview, it's toggled off so you can edit the LaTeX snippet. When
+you move the cursor away, the preview is turned on again.
+
+```emacs-lisp
+(use-package org-fragtog
+  :hook (org-mode-hook . org-fragtog-mode))
 ```
 
 
@@ -191,81 +236,176 @@ priority.
         (70 . "#4C566A")))
 ```
 
-And then the keywords and their colours.
+And then the custom keywords.
 
 ```emacs-lisp
 (setq org-todo-keywords
       '((sequence
-		 "TODO" "PROJ" "READ" "CHECK" "IDEA" ; Needs further action
+		 "TODO(t)" "WAIT(w)" "READ(r)" "PROG(p)" ; Needs further action
 		 "|"
-		 "DONE")))                           ; Needs no action currently
-
-(setq org-todo-keyword-faces
-      '(("TODO"      :inherit (org-todo region) :foreground "#A3BE8C" :weight bold)
-		("PROJ"      :inherit (org-todo region) :foreground "#88C0D0" :weight bold)
-        ("READ"      :inherit (org-todo region) :foreground "#8FBCBB" :weight bold)
-		("CHECK"     :inherit (org-todo region) :foreground "#81A1C1" :weight bold)
-		("IDEA"      :inherit (org-todo region) :foreground "#EBCB8B" :weight bold)
-		("DONE"      :inherit (org-todo region) :foreground "#30343d" :weight bold)))
+		 "DONE(d)")))                            ; Needs no action currently
 ```
 
-Here, you can see a screenshot of these TODOs in action.
-
-{{< figure src="/img/todos.png" link="/img/todos.png" >}}
-
-
-## Prettier UI Elements {#prettier-ui-elements}
-
-I use a combination of  [`org-modern`](https://github.com/minad/org-modern) and [`org-superstar`](https://github.com/integral-dw/org-superstar-mode) to style my UI elements.
-`org-modern` is what gives me such pretty source code blocks, for example. Here's my
-(relatively minimal) setup for it.
+I don't set the colours of each TODO state individually anymore, but if you
+wanted to, you could set the `org-todo-keyword-faces` variable like this:
 
 ```emacs-lisp
-(use-package org-modern
-  :config
-  (setq
-   org-auto-align-tags t
-   org-tags-column 0
-   org-fold-catch-invisible-edits 'show-and-error
-   org-special-ctrl-a/e t
-   org-insert-heading-respect-content t
-
-   ;; Don't style the following
-   org-modern-tag nil
-   org-modern-priority nil
-   org-modern-todo nil
-   org-modern-table nil
-
-   ;; Agenda styling
-   org-agenda-tags-column 0
-   org-agenda-block-separator ?─
-   org-agenda-time-grid
-   '((daily today require-timed)
-	 (800 1000 1200 1400 1600 1800 2000)
-	 " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-   org-agenda-current-time-string
-   "⭠ now ─────────────────────────────────────────────────")
-
-  (global-org-modern-mode))
+(setq org-todo-keyword-faces
+      '(("TODO(t)"      :inherit (org-todo region) :foreground "#A3BE8C" :weight bold)
+		...))
 ```
 
-And here is the setup for `org-superstar`.
+
+## Bullets {#bullets}
+
+ [org-superstar](https://github.com/integral-dw/org-superstar-mode)  styles some of my UI elements, such as bullets and special
+checkboxes for TODOs. It can style a lot more, so I recommend checking the
+package out!
 
 ```emacs-lisp
 (use-package org-superstar
   :config
   (setq org-superstar-leading-bullet " ")
+  (setq org-superstar-headline-bullets-list '("◉" "○" "⚬" "◈" "◇"))
   (setq org-superstar-special-todo-items t) ;; Makes TODO header bullets into boxes
-  (setq org-superstar-todo-bullet-alist '(("TODO" . 9744)
-                                          ("DONE" . 9744)
-                                          ("READ" . 9744)
-                                          ("IDEA" . 9744)
-                                          ("WAITING" . 9744)
-                                          ("CANCELLED" . 9744)
-                                          ("PROJECT" . 9744)
-                                          ("POSTPONED" . 9744)))
-  )
+  (setq org-superstar-todo-bullet-alist '(("TODO"  . 9744)
+                                          ("WAIT"  . 9744)
+                                          ("READ"  . 9744)
+                                          ("PROG"  . 9744)
+										  ("DONE"  . 9745)))
+  :hook (org-mode . org-superstar-mode))
 ```
+
+
+## SVG Elements {#svg-elements}
+
+I use [svg-tag-mode](https://github.com/rougier/svg-tag-mode) to replace progress bars, task priorities, dates, and citations with nice SVG
+graphics. This package can also style many more elements and I'd encourage you
+to read the documentation to find other things you might want to style with
+this.
+
+```emacs-lisp
+(use-package svg-tag-mode
+  :config
+  (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
+  (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
+  (defconst day-re "[A-Za-z]\\{3\\}")
+  (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
+
+  (defun svg-progress-percent (value)
+	(svg-image (svg-lib-concat
+				(svg-lib-progress-bar (/ (string-to-number value) 100.0)
+			      nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+				(svg-lib-tag (concat value "%")
+				  nil :stroke 0 :margin 0)) :ascent 'center))
+
+  (defun svg-progress-count (value)
+	(let* ((seq (mapcar #'string-to-number (split-string value "/")))
+           (count (float (car seq)))
+           (total (float (cadr seq))))
+	  (svg-image (svg-lib-concat
+				  (svg-lib-progress-bar (/ count total) nil
+					:margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+				  (svg-lib-tag value nil
+					:stroke 0 :margin 0)) :ascent 'center)))
+  (setq svg-tag-tags
+      `(
+        ;; Task priority
+        ("\\[#[A-Z]\\]" . ( (lambda (tag)
+                              (svg-tag-make tag :face 'org-priority
+                                            :beg 2 :end -1 :margin 0))))
+
+        ;; Progress
+        ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
+          (svg-progress-percent (substring tag 1 -2)))))
+        ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
+          (svg-progress-count (substring tag 1 -1)))))
+
+        ;; Citation of the form [cite:@Knuth:1984]
+        ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
+                                          (svg-tag-make tag
+                                                        :inverse t
+                                                        :beg 7 :end -1
+                                                        :crop-right t))))
+        ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
+                                                (svg-tag-make tag
+                                                              :end -1
+                                                              :crop-left t))))
+
+
+        ;; Active date (with or without day name, with or without time)
+        (,(format "\\(<%s>\\)" date-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :end -1 :margin 0))))
+        (,(format "\\(<%s \\)%s>" date-re day-time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
+        (,(format "<%s \\(%s>\\)" date-re day-time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
+
+        ;; Inactive date  (with or without day name, with or without time)
+         (,(format "\\(\\[%s\\]\\)" date-re) .
+          ((lambda (tag)
+             (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
+         (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
+          ((lambda (tag)
+             (svg-tag-make tag :beg 1 :inverse nil
+						       :crop-right t :margin 0 :face 'org-date))))
+         (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
+          ((lambda (tag)
+             (svg-tag-make tag :end -1 :inverse t
+						       :crop-left t :margin 0 :face 'org-date)))))))
+
+(add-hook 'org-mode-hook 'svg-tag-mode)
+```
+
+
+## Prettify Tags &amp; Keywords {#prettify-tags-and-keywords}
+
+I have a custom function to prettify tags and other elements, lifted from [Jake
+B's Emacs setup](https://github.com/jakebox/jake-emacs/blob/main/jake-emacs/jib-funcs.el).
+
+```emacs-lisp
+(defun my/prettify-symbols-setup ()
+  ;; Checkboxes
+  (push '("[ ]" . "") prettify-symbols-alist)
+  (push '("[X]" . "") prettify-symbols-alist)
+  (push '("[-]" . "" ) prettify-symbols-alist)
+
+  ;; org-abel
+  (push '("#+BEGIN_SRC" . ?≫) prettify-symbols-alist)
+  (push '("#+END_SRC" . ?≫) prettify-symbols-alist)
+  (push '("#+begin_src" . ?≫) prettify-symbols-alist)
+  (push '("#+end_src" . ?≫) prettify-symbols-alist)
+
+  (push '("#+BEGIN_QUOTE" . ?❝) prettify-symbols-alist)
+  (push '("#+END_QUOTE" . ?❞) prettify-symbols-alist)
+
+  ;; Drawers
+  (push '(":PROPERTIES:" . "") prettify-symbols-alist)
+
+  ;; Tags
+  (push '(":projects:" . "") prettify-symbols-alist)
+  (push '(":work:"     . "") prettify-symbols-alist)
+  (push '(":inbox:"    . "") prettify-symbols-alist)
+  (push '(":task:"     . "") prettify-symbols-alist)
+  (push '(":thesis:"   . "") prettify-symbols-alist)
+  (push '(":uio:"      . "") prettify-symbols-alist)
+  (push '(":emacs:"    . "") prettify-symbols-alist)
+  (push '(":learn:"    . "") prettify-symbols-alist)
+  (push '(":code:"     . "") prettify-symbols-alist)
+
+  (prettify-symbols-mode))
+
+(add-hook 'org-mode-hook        #'my/prettify-symbols-setup)
+(add-hook 'org-agenda-mode-hook #'my/prettify-symbols-setup)
+```
+
+After all this prettification, TODOs, code blocks, and lists look like
+screenshot below.
+
+{{< figure src="/img/todos.png" link="/img/todos.png" >}}
 
 
 ## Conclusion {#conclusion}
