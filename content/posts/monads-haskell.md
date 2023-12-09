@@ -18,7 +18,8 @@ would re-read the definitions and slowly feel like I started to understand them.
 First, I'll give a brief introduction to monads, using the `List` monad as an example.
 
 Then, to explain why we might want to use monads, I'll reproduce a famous example:
-Using the Writer monad to perform logging.
+Using the Writer monad to perform logging. I'll be borrowing heavily
+[this intro](https://www.youtube.com/watch?v=C2w45qRc3aU) to monads by Studying With Alex on YouTube.
 
 And finally, to cover more of the theory behind monads, we'll have a look at the `Maybe`
 monad in Haskell.
@@ -35,17 +36,27 @@ you can't just do it any way you like: You have to map the function over _all_ t
 elements and preserve their order! So somehow, the context of the list carries
 over into the next computation you want to do on it.
 
-I also find it useful to think of monads as "containers" or boxes
-around values.
+In general, I find it useful to think of monads as "containers" or boxes
+around values. In this case, the list `[...]` is a container and the elements are
+the values.
 
-An integer value isn't a singleton list by itself, so we have to
-_return_ the value to put it inside the container - which I think of as "wrapping"
-the value. E.g., wrapping `5` in `[]` to make it the singleton list `[5]`.
+If you take a normal integer, that value isn't a (singleton) list by itself.
+E.g., wrapping `5` isn't a list, but `[5]` is. To take an integer like `5` and make it
+into a singleton list, we have to "wrap it" in square brackets. In general this
+function is called _return_.
 
-The containers also prevent us from accessing the values directly, so we have to
-_extract_ them somehow - which I think of as unwrapping them. E.g., I can't do
+The containers, like `[]`, also prevent us from accessing the values directly, so
+we have to "unwrap" them somehow. E.g., I can't do
 `[5] + 3` because I'm trying to add a list of integers to an integer, but I
-_can_ do `([5] !! 0) + 3` because now I'm adding an integer to another integer.
+_can_ do `map (+ 3) [5]`, because now I'm adding an integer to another integer. This
+function is called _bind_ and is written in Haskell with the symbol `>>=`.
+
+Note that when we are "extracting" a value in this way, we _must_ pass it to a
+function that promises to put it back in to the monad. There are other ways to
+just take out the value and use it normally, but then we also lose the context.
+I.e., if I do `([5, 6, 7] !! 0) + 3`, I can extract `5` without any additional
+context. Then I can add it to `3` and get `8` and that's fine, but now the rest of
+the list is "gone" and I have no way of putting `8` into the list instead of `5`.
 
 So, monads allow us to perform computations with context in a functional way.
 What's so special about that? Well, the number of elements and ordering of the list, depends on the
@@ -54,13 +65,26 @@ And yet, it's still functional, because all the computations on lists return the
 results each time they are called _in the same context_, i.e., on the same list.
 
 > For later, remember that a monad needs a way to put a normal value _into_ the
-> monad, and a way to extract a normal value _out of_ the monad.
+> monad, and a way to extract a normal value _out of_ the monad to pipe it to
+> another function, that must eventually put it back into the monad.
+
+Normal values can be "put inside" a monad by wrapping them with some extra
+context. In a way, then, `return` is the function that takes a normal value `a` and
+returns that value with some extra context `m` and gives us the new value `(a, m)`.
+Now we can't just access `a` directly anymore, we need to first take it out of
+this context wrapper and then _bind_ it to a function that puts it back.
+
+{{< figure src="/img/monad-1.png" link="/img/monad-1.png" >}}
 
 
 ## Writer Monad to the Rescue! {#writer-monad-to-the-rescue}
 
 Now we'll have a look at the [Writer](https://hackage.haskell.org/package/mtl/docs/Control-Monad-Writer.html) monad, a commonly used monad
 that will hopefully illustrate the concepts more clearly.
+
+**Please note:** This example is common, but my particular implementation borrows heavily from
+[this intro](https://www.youtube.com/watch?v=C2w45qRc3aU) to monads by Studying With Alex on YouTube, and I would recommend
+that video!
 
 The **Writer** monad is often used for logging.
 
@@ -252,7 +276,8 @@ square n = LogWriter (n^2, ["Squared " ++ show n])
 
 And finally, perform monadic operation that keep track of the log the whole way!
 Since the result of `add` and `square` is now values within the `LogWriter`, we
-have to remember to `run` the monad so we get a nice, printable result.
+have to remember to `run` the monad so we get a nice, printable result. `run` gives
+us the final output _with_ the context, after all the computations are done.
 
 ```shell
 ghci> add 5 3   # Gives us values INSIDE the monad!
@@ -280,6 +305,12 @@ ghci> run $ add 6 3 >> square 2 >> add 4 5
 ghci> run $ add 5 10 >> square (fst $ run $ add 3 2) >> square 2 >> add 4 5
 (9,["Added 5 to 10","Squared 5","Squared 2","Added 4 to 5"])
 ```
+
+Now, we have a normal function like `+` between normal values and
+a "stateful" function like `add` from normal values to wrapped values. As an
+example, we can picture `run $ add 4 5 >>​= square` like this:
+
+{{< figure src="/img/monad-2.png" link="/img/monad-2.png" >}}
 
 
 ## `Maybe` We'll Get A Value {#maybe-we-ll-get-a-value}
@@ -632,13 +663,16 @@ instance Functor [] where
   fmap = liftM
 ```
 
-Finally, monads also have to obey some laws.
+Finally, monads also have to obey the monad laws.
 
 ```haskell
 (return x) >>= f == f x                     -- 'return' is left-identity  wrt. '>>='
 m >>= return     == m                       -- 'return' is right-identity wrt. '>>='
 (m >>= f) >>= g  == m >>= (\x -> f x >>= g) -- '>>=' is associative
 ```
+
+
+## Picturing A Monad {#picturing-a-monad}
 
 
 ## Conclusion &amp; Further Reading {#conclusion-and-further-reading}
