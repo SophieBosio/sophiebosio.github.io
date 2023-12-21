@@ -117,15 +117,15 @@ would agree with. Check out the "early init" files or startup sections of the
 configs above.
 
 In general, you set the value of a variable using `setq` and that code will often have
-this form, where `t`, `nil` `1` and `-1` are common values for activating/deactivating
+this form, where `t`, `nil` `1` and `0` are common values for activating/deactivating
 an option or a mode.
 
 ```emacs-lisp
 (setq enabled-option  t
 	  disabled-option nil
 
-	  enabled-mode     1
-	  disabled-mode   -1)
+	  enabled-mode    1
+	  disabled-mode   0)
 ```
 
 After you're done tweaking Emacs' default behaviours, you'll probably need some packages. Many Emacs packages are
@@ -137,16 +137,16 @@ first.
 ```emacs-lisp
 (setq package-archives
 	  '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
-        ("MELPA"        . "https://melpa.org/packages/")
-        ("ORG"          . "https://orgmode.org/elpa/")
-        ("MELPA Stable" . "https://stable.melpa.org/packages/")
-        ("nongnu"       . "https://elpa.nongnu.org/nongnu/"))
+		("MELPA"        . "https://melpa.org/packages/")
+		("ORG"          . "https://orgmode.org/elpa/")
+		("MELPA Stable" . "https://stable.melpa.org/packages/")
+		("nongnu"       . "https://elpa.nongnu.org/nongnu/"))
 	  package-archive-priorities
 	  '(("GNU ELPA"     . 20)
-        ("MELPA"        . 15)
-        ("ORG"          . 10)
-        ("MELPA Stable" . 5)
-        ("nongnu"       . 0)))
+		("MELPA"        . 15)
+		("ORG"          . 10)
+		("MELPA Stable" . 5)
+		("nongnu"       . 0)))
 
 (package-initialize)
 ```
