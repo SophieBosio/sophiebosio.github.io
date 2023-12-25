@@ -19,8 +19,8 @@ concepts like major modes or how to save files in Emacs. I'll primarily be
 focusing on how you can get started personalising it.
 
 Before we get into it, I'd like to cover three things: (1) Emacs is a Lisp
-interpreter at heart, (2) you should try out pieces of other people's configs,
-and (3) there are great places to get help.
+interpreter at heart, (2) there are great places to get help,
+and (3) you should try out pieces of other people's configs.
 
 
 ## Preamble {#preamble}
@@ -45,6 +45,24 @@ Thankfully, Elisp is a pretty readable language and as long as you watch your
 parentheses, you'll be fine.
 
 
+### Get Help {#get-help}
+
+The Emacs community is very friendly and are often keep to help
+out. I hang out a lot on the [r/emacs
+subreddit](https://www.reddit.com/r/emacs/) and have gotten tons of tips and troubleshooting help from there.
+[r/planetemacs](https://www.reddit.com/r/planetemacs) is also great --- they focus mostly on packages and blog posts/article links.
+
+Emacs also has a pretty good documentation and help system. You can take the
+Emacs tutorial using `C-h t`. Ask Emacs for help using:
+
+-   `C-h v` to see the documentation for a variable
+-   `C-h f` to see the documentation for a function
+-   `C-h k` to see what a keybinding does
+-   `C-h m` to show help for the current major and minor modes
+
+Or read on the [Emacs Wiki](https://www.emacswiki.org/).
+
+
 ### Config Inspo {#config-inspo}
 
 This brings me to my first and (I think) most helpful tip: Get inspired by other
@@ -59,11 +77,10 @@ me any questions you might have by [email](mailto:sophie.bosio@outlook.com). (If
 any corrections or improvements!)
 
 Here are some of the configurations I have stolen a lot of my configuration from and
-can heartily recommend checking out. I'd also like to recommend Jake Boxerman's
-[YouTube channel](https://www.youtube.com/@JakeBox0), covering concise and useful Emacs tips.
+can heartily recommend checking out.
 
 -   [Lars Tveito](https://github.com/larstvei/dot-emacs)
--   [Jake Boxerman](https://github.com/jakebox/jake-emacs)
+-   [Jake Boxerman](https://github.com/jakebox/jake-emacs), with [accompanying video](https://youtu.be/Gi7yBMYZylU?si=OO0r57KvYpUL2S9W)
 -   [Protesilaos Stavrou](https://github.com/protesilaos/dotfiles)
 -   [David Wilson (System Crafters)](https://github.com/daviwil/dotfiles)
 -   [Nicolas Rougier](https://github.com/rougier/dotemacs)
@@ -83,23 +100,6 @@ Some of these include:
 -   [Crafted Emacs](https://github.com/SystemCrafters/crafted-emacs)
 -   [Purcell's Emacs config](https://github.com/purcell/emacs.d)
 -   [Nano Emacs](https://github.com/rougier/nano-emacs)
-
-
-### Get Help {#get-help}
-
-As mentioned, the Emacs community is very friendly and are often keep to help
-out. I hang out a lot on the [Emacs
-subreddit](https://www.reddit.com/r/emacs/) and have gotten tons of tips and troubleshooting help from there.
-
-Emacs also has a pretty good documentation and help system. You can take the
-Emacs tutorial using `C-h t`. Ask Emacs for help using:
-
--   `C-h v` to see the documentation for a variable
--   `C-h f` to see the documentation for a function
--   `C-h k` to see what a keybinding does
--   `C-h m` to show help for the current major and minor modes
-
-Or read on the [Emacs Wiki](https://www.emacswiki.org/).
 
 
 ## Basics: Setting Variables &amp; Installing Packages {#basics-setting-variables-and-installing-packages}
@@ -206,8 +206,8 @@ Here's a (simple) example of how to remove some visual elements from vanilla Ema
 And here's an example of setting up the [Olivetti](https://github.com/rnkn/olivetti) package:
 
 ```emacs-lisp
-(require 'olivetti)
-(setq olivetti-style t)
+(require 'olivetti)     ;; Make sure Olivetti is installed
+(setq olivetti-style t) ;; Set the 'olivetti-style' variable to true
 ```
 
 
@@ -225,7 +225,7 @@ their main entry point to running commands in Emacs, providing auto-completions,
 search tools, suggestions, prettification, etc. For example, they can auto-fill
 directory and file names when opening a file with `C-x C-f`. In reality, these packages all work quite
 differently and are usually combined with other supplementary packages, but
-there are a few common ones used as the cores in these systems.
+there are a few common ones that people use as the core of their systems.
 They include:
 
 -   [Vertico](https://github.com/minad/vertico)
@@ -236,7 +236,9 @@ As mentioned, there are many, _many_ packages people pair with these systems. Id
 comes built-in with Emacs, so you might want to start there. I personally use
 Vertico and have been very happy with that. I tried Helm, but found it a little
 overwhelming and felt I wasn't using it to its full potential. People do love it
-though. Play around with them a little, and if you like one, I'd say stick to
+though.
+
+Play around with them a little, and if you like one, I'd say stick to
 it. Jumping around with these is kind of confusing, so I would only consider
 switching if I had a problem with the one I was using, or if another one had
 some very attractive feature.
@@ -279,7 +281,7 @@ suggestions for possible continuations of the sequence.
 
 For suggestions on more packages to check out,
 [awesome-emacs](https://github.com/emacs-tw/awesome-emacs) is a curated and oft-updated package list. I also love browsing
-the top posts on the Emacs subreddit.
+the top posts on the Emacs subreddits mentioned above.
 
 
 ## Aesthetics: Fonts &amp; Themes {#aesthetics-fonts-and-themes}
@@ -315,8 +317,8 @@ packages by hand. A great place to get started, is Doom Emacs' theme pack called
 it like this:
 
 ```emacs-lisp
-(require' doom-themes)
-(load-theme 'doom-nord t)
+(require' doom-themes)    ;; Make sure doom-themes are installed
+(load-theme 'doom-nord t) ;; Load the doom-nord theme
 ```
 
 I also really like the [Modus themes](https://protesilaos.com/emacs/modus-themes), the
@@ -343,13 +345,13 @@ simple way to get basic Python 3.11 support:
 (setq python-shell-interpreter "python3.11")
 ```
 
-Here's my current setup for Haskell (except I've written it using `require`
-instead of `use-package`) using Stack:
+Here's my current setup for Haskell (except I've rewritten it to use `require`
+instead of `use-package`) using the Stack tool to build my Haskell projects:
 
 ```emacs-lisp
 (require 'haskell-mode)
 (add-hook 'haskell-mode 'haskell-doc-mode)
-(setq haskell-hoogle-command                  "hoogle"
+(setq haskell-hoogle-command                    "hoogle"
 		haskell-compile-stack-build-command     "stack build"
 		haskell-compile-stack-build-alt-command "stack build --pedantic")
 (define-key haskell-mode-map (kbd "C-c h")   'haskell-hoogle)
@@ -372,8 +374,11 @@ Maybe you want to activate line numbers each time you start programming. To do
 that, you can add a hook to `prog-mode` like so:
 
 ```emacs-lisp
+;; Activate 'display-line-numbers-mode' when programming
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 ```
+
+Note the apostrophe before the names of the functions (here, the names of the modes)!
 
 You can do so many more things with hooks and get really creative! I mostly use
 them to set up my modes the way I like them. E.g., I always center my text
