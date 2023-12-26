@@ -102,7 +102,7 @@ Some of these include:
 -   [Nano Emacs](https://github.com/rougier/nano-emacs)
 
 
-## Basics: Setting Variables &amp; Installing Packages {#basics-setting-variables-and-installing-packages}
+## Basics: Setting Variables {#basics-setting-variables}
 
 Your configuration file is an Emacs Lisp file called `init.el`, located in your
 Emacs home directory. Usually, this is at `~/.emacs.d/init.el`. This is where
@@ -114,11 +114,12 @@ and configuring community packages. You'll probably want to do both.
 There are quite a few blog posts and configurations that cover how to set "sane
 defaults" --- i.e., modify the default behaviour of Emacs in a way most people
 would agree with. Check out the "early init" files or startup sections of the
-configs above.
+configs above. You might also want to check out [sensible-defaults](https://github.com/hrs/sensible-defaults.el), which
+contains a lot of useful and, yes, sensible functions you can use in your config.
 
-In general, you set the value of a variable using `setq` and that code will often have
-this form, where `t`, `nil` `1` and `0` are common values for activating/deactivating
-an option or a mode.
+In general, you set the value of a variable using `setq`. Specify the name of the
+variable or the mode, then set it to an accepted value. Often variables will use
+`t` / `nil` and modes will use `1` / `0`.
 
 ```emacs-lisp
 (setq enabled-option  t
@@ -128,7 +129,26 @@ an option or a mode.
 	  disabled-mode   0)
 ```
 
-After you're done tweaking Emacs' default behaviours, you'll probably need some packages. Many Emacs packages are
+
+## Installing Packages {#installing-packages}
+
+After you're done tweaking Emacs' default behaviours, you'll probably need some
+packages.
+
+You can install a package from a package source or load an installed package in
+your load path using the `require` keyword.
+
+```emacs-lisp
+(require 'package-name)
+```
+
+This is the easiest way to get started. Add the `require`-line to your `init.el`
+file and use `setq` to configure the package.
+
+In fact, at the top of your `init.el` file, you should `(require 'package)`.
+`package.el` is the default package manager for Emacs.
+
+Many Emacs packages are
 available at [MELPA](https://melpa.org/), a package archive with generally high-quality packages. You
 might also want to add some other package sources. Here's an example from my
 config, where I add quite a few sources and tell Emacs which places to check
@@ -151,30 +171,26 @@ first.
 (package-initialize)
 ```
 
-You can also point Emacs to look for `.el` files that you have downloaded manually
-and saved on your computer. It's practical to put all these files in the same
-place and add all of them to your "load path" so Emacs knows where to look for
-them.
+After setting up your package sources, you can add `(require 'package-name)` to
+your `init.el` and Emacs will automatically search, download, and install that
+package from the source. Remember to evaluate your `init.el` file for this to happen,
+either by using the command `eval-buffer` on `init.el` or by restarting Emacs.
 
-```text
-(defvar local-extensions "~/.emacs.d/local-lisp/")
+Some packages are not available on MELPA &amp; Co., in which case you might want to
+download it and save it on your computer manually. Or maybe you want to use a
+package you've written yourself.
+
+In that case, you can also point Emacs to look for `.el` files on your computer.
+It's practical to put all these files in the same place and add all of them to
+your "load path" so Emacs knows where to look for them. Here's a setup for
+loading files from the  `~/.emacs.d/local-lisp` directory and sub-directories.
+
+```emacs-lisp
+(defvar local-lisp "~/.emacs.d/local-lisp/")
 (add-to-list 'load-path  local-lisp)
 (let ((default-directory local-lisp))
   (normal-top-level-add-subdirs-to-load-path))
 ```
-
-You can install a package from a package source or load an installed package in
-your load path using the `require` keyword.
-
-```emacs-lisp
-(require 'package-name)
-```
-
-This is the easiest way to get started. Add the `require`-line to your `init.el`
-file and use `setq` to configure the package.
-
-In fact, at the top of your `init.el` file, you should `(require 'package)`.
-`package.el` is the default package manager for Emacs.
 
 <details>
 <summary>A note on package management</summary>
@@ -220,11 +236,13 @@ have gathered some packages I like and some alternatives to them.
 
 ### Completion Systems {#completion-systems}
 
-The really big one is your **completion system**. Many people use a system to act as
-their main entry point to running commands in Emacs, providing auto-completions,
+The really big one is your **completion system**. By default, some things in Emacs
+can feel a little clunky, such as entering commands, searching documents, and
+finding files. Thankfully, there are packages that give you a nice prompt with auto-completions,
 search tools, suggestions, prettification, etc. For example, they can auto-fill
-directory and file names when opening a file with `C-x C-f`. In reality, these packages all work quite
-differently and are usually combined with other supplementary packages, but
+directory and file names when opening a file with `C-x C-f`.
+
+These packages are usually combined with other supplementary packages, but
 there are a few common ones that people use as the core of their systems.
 They include:
 
@@ -286,7 +304,7 @@ the top posts on the Emacs subreddits mentioned above.
 
 ## Aesthetics: Fonts &amp; Themes {#aesthetics-fonts-and-themes}
 
-The quickest way to personalise!
+The quickest way to make your Emacs experience feel more personalised!
 
 There are many different ways to set fonts in Emacs. You can also set different
 fonts for the Emacs UI, for programming (monospaced or "fixed pitch" fonts) and
