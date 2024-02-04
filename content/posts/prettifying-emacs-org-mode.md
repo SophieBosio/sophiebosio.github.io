@@ -1,5 +1,5 @@
 +++
-title = "Beautifying Emacs Org Mode"
+title = "Prettifying Emacs Org Mode"
 author = ["Sophie"]
 date = 2023-08-10T22:19:00+02:00
 tags = ["emacs"]
@@ -13,7 +13,9 @@ of your editor as Emacs does. Customising and tweaking your configuration may be
 endless endeavour, but it's also a highly rewarding one.
 
 All that being said, I was inspired to tweak the look of my Org Mode setup,
-especially after reading [this post](https://zzamboni.org/post/beautifying-org-mode-in-emacs/). Below you can find screenshots and code. I
+especially after reading the blog post
+[Beautifying
+Org Mode in Emacs](https://zzamboni.org/post/beautifying-org-mode-in-emacs/). Below you can find screenshots and code. I
 hope there's something in here that you might want to steal for your own config!
 In case I change these settings later, my most recently updated config is always
 available on my [GitHub](https://github.com/SophieBosio/.emacs.d).
