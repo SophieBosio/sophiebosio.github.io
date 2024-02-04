@@ -69,8 +69,9 @@ params:
         Title: "Hi! I'm Sophie, a master's student at the University of Oslo."
         Content: >
           I'm currently writing my MSc thesis
-          on using program inversion to automatically derive good
-          test input generators for functional languages.
+          on automatically deriving good
+          test input generators for property-based testing in
+          functional languages.
           
           Besides functional programming, I'm a (budding) Emacs
           enthusiast with an above-average interest in coffee.
