@@ -1,9 +1,9 @@
 +++
+title = "About"
 author = ["Sophie"]
+date = 2023-06-08T17:43:00+02:00
 draft = false
 +++
-
-## About {#about}
 
 I'm Sophie! I was born in Oslo in 1999, and after some moving back and forth
 for my studies, I'm back in my home city.
