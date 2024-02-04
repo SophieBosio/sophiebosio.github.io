@@ -3,7 +3,7 @@ author = ["Sophie"]
 draft = false
 +++
 
-## <span class="org-todo done DONE">DONE</span> About {#about}
+## About {#about}
 
 I'm Sophie! I was born in Oslo in 1999, and after some moving back and forth
 for my studies, I'm back in my home city.
