@@ -1,5 +1,6 @@
 +++
 title = "Education"
+author = ["Sophie Adeline Solheim Bosio"]
 date = 2023-06-08T14:48:00+02:00
 draft = false
 +++
@@ -54,9 +55,9 @@ the University of Bologna (right):
 
 ## MSc {#msc}
 
-I am currently in the second (and final) year of my master's degree in
-[Programming and System Architecture](https://www.uio.no/studier/program/informatikk-programmering-master/) at the [University of Oslo](https://www.uio.no/), Norway, with the
-software specialisation. 🌱
+I have amaster's degree in [Programming and System Architecture](https://www.uio.no/studier/program/informatikk-programmering-master/) from the [University of Oslo](https://www.uio.no/), Norway, with a specialisation in software. 🌱
+
+My thesis project and thesis text are available on [GitHub](https://github.com/SophieBosio/contra).
 
 The courses I have taken at UiO are briefly summarised below.
 

@@ -1,6 +1,6 @@
 +++
 title = "About"
-author = ["Sophie"]
+author = ["Sophie Adeline Solheim Bosio"]
 date = 2023-06-08T17:43:00+02:00
 draft = false
 +++
@@ -10,16 +10,12 @@ for my studies, I'm back in my home city.
 
 I'm very interested in programming, coffee, natural languages, and music.
 
-Currently, I'm writing my MSc thesis, working part-time as a software engineer
-intern at [Ardoq](https://www.ardoq.com/) and enjoying the wild ride of learning Emacs.
+Currently, I'm working as a software engineer at [Ardoq](https://www.ardoq.com/).
 
-My thesis work is about trying to make [property-based
-testing](https://medium.com/criteo-engineering/introduction-to-property-based-testing-f5236229d237) a little easier to get started with, by automatically generating test
-input generators for you. Normally, you have to write generators for
-user-defined algebraic data types yourself but in my small functional language Contra,
-generators for simple ADTs are derived automatically.
+I recently graduated with an MSc from the University of Oslo, where I wrote my thesis on [property-based
+testing](https://medium.com/criteo-engineering/introduction-to-property-based-testing-f5236229d237). I designed and implemented a small functional language called [Contra](https://github.com/SophieBosio/contra), which has native support for defining properties and a built-in property-checker. It's capable of automatically generating counterexamples, even for user-defined algebraic data types, using SMT solving.
 
-My thesis work is in Haskell and at work, I'm learning more and more Clojure.
+I implemented Contra in Haskell and at work, I'm getting to love Clojure.
 I'm generally interested in functional programming languages - bonus if there's
 a nice Emacs mode for it!
 

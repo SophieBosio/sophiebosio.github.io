@@ -66,16 +66,15 @@ params:
     # images: ["papermod-cover.png"]
 
     homeInfoParams:
-        Title: "Hi! I'm Sophie, a master's student at the University of Oslo."
+        Title: "Hi! I'm Sophie, a software engineer and Emacs enthusiast."
         Content: >
-          I'm currently writing my MSc thesis
-          on automatically deriving good
-          test input generators for property-based testing in
-          functional languages.
+          I work at Ardoq where I get to code Clojure on the backend.
           
-          Besides functional programming, I'm a (budding) Emacs
-          enthusiast with an above-average interest in coffee.
-          When I'm not learning programming languages,
+          I write mostly about functional programming and Emacs.
+          
+          Away from the computer, I have an above-average interest in coffee.
+          
+          And when I'm not learning programming languages,
           I like to try my hand at learning natural ones. 🌱
 
     socialIcons:
