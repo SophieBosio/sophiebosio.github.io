@@ -5,6 +5,29 @@ date = 2023-06-08T14:48:00+02:00
 draft = false
 +++
 
+## MSc {#msc}
+
+I have a master's degree in [Programming and System Architecture](https://www.uio.no/studier/program/informatikk-programmering-master/) from the [University of Oslo](https://www.uio.no/), Norway, with a specialisation in software. 🌱
+
+My thesis project and thesis text are available on [GitHub](https://github.com/SophieBosio/contra).
+
+The courses I have taken at UiO are briefly summarised below.
+
+<details>
+<summary>Courses in Programming and System Architecture at UiO</summary>
+<div class="details">
+
+-   [IN5130](https://www.uio.no/studier/emner/matnat/ifi/IN5130/index-eng.html) - Modelling Unassailable IT-Systems
+-   [IN5170](https://www.uio.no/studier/emner/matnat/ifi/IN5170/index-eng.html) - Models of Concurrency
+-   [TEK5510](https://www.uio.no/studier/emner/matnat/its/TEK5510/index-eng.html) - Security in Operating Systems and Software
+-   [IN5570](https://www.uio.no/studier/emner/matnat/ifi/IN5570/index-eng.html) - Distributed Objects
+-   [IN5580](https://www.uio.no/studier/emner/matnat/ifi/IN5580/) - Computability Theory
+-   [INF5110](https://www.uio.no/studier/emner/matnat/ifi/INF5110/) - Compiler Construction
+-   Special Curriculum - Advanced Functional Programming, Semantics, and Types
+</div>
+</details>
+
+
 ## BSc {#bsc}
 
 I have a bachelor's degree in [Cognitive Science](https://www.uib.no/en/studies/BASV-KOGNI) from the [University of Bergen](https://www.uib.no/), Norway.
@@ -49,28 +72,5 @@ the University of Bologna (right):
 -   MAT111 -&gt; [79184](https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2021/403275) - Calculus I
 -   INF102 -&gt; [91256](https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2021/446600) - Algorithms and Programming (Python)
 -   Free credits -&gt; [90106](https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2021/443719) - Ingegneria del Software (JavaScript)
-</div>
-</details>
-
-
-## MSc {#msc}
-
-I have amaster's degree in [Programming and System Architecture](https://www.uio.no/studier/program/informatikk-programmering-master/) from the [University of Oslo](https://www.uio.no/), Norway, with a specialisation in software. 🌱
-
-My thesis project and thesis text are available on [GitHub](https://github.com/SophieBosio/contra).
-
-The courses I have taken at UiO are briefly summarised below.
-
-<details>
-<summary>Courses in Programming and System Architecture at UiO</summary>
-<div class="details">
-
--   [IN5130](https://www.uio.no/studier/emner/matnat/ifi/IN5130/index-eng.html) - Modelling Unassailable IT-Systems
--   [IN5170](https://www.uio.no/studier/emner/matnat/ifi/IN5170/index-eng.html) - Models of Concurrency
--   [TEK5510](https://www.uio.no/studier/emner/matnat/its/TEK5510/index-eng.html) - Security in Operating Systems and Software
--   [IN5570](https://www.uio.no/studier/emner/matnat/ifi/IN5570/index-eng.html) - Distributed Objects
--   [IN5580](https://www.uio.no/studier/emner/matnat/ifi/IN5580/) - Computability Theory
--   [INF5110](https://www.uio.no/studier/emner/matnat/ifi/INF5110/) - Compiler Construction
--   Special Curriculum - Advanced Functional Programming, Semantics, and Types
 </div>
 </details>
