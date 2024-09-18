@@ -42,16 +42,24 @@ Next, I'll bind some keys. The LSP server can suggest code actions and to execut
          (clojurec-mode . lsp)
          (lsp-mode      . lsp-enable-which-key-integration))
   :bind (:map lsp-mode-map
-              ("M-<return>" . lsp-execute-code-action)
               ("C-M-."      . lsp-find-references)
-              ("C-c r"      . lsp-rename)))
+              ("C-c r"      . lsp-rename)
+              ("M-<return>" . lsp-execute-code-action)))
 ```
 
-Then, `M-<return>` gives me a minibuffer with available code actions.
+Then, `C-M-.` pops up an `xref` buffer where I can see all references to a function, in which I can select an entry and jump to the call site.
+
+{{< figure src="/img/lsp-xref.png" link="/img/lsp-xref.png" >}}
+
+I can also press `C-c r` to rename a symbol as you'd expect.
+
+{{< figure src="/img/lsp-rename.png" link="/img/lsp-rename.png" >}}
+
+`M-<return>` gives me a minibuffer with available code actions.
 
 {{< figure src="/img/lsp-code-actions.png" link="/img/lsp-code-actions.png" >}}
 
-> As a quick note, this is a regular minibuffer. I just use [vertico](https://github.com/minad/vertico) with [vertico-posframe](https://github.com/tumashu/vertico-posframe), which gives me a nice childframe.
+> As a quick note, the code actions show up in a regular minibuffer. I just use [vertico](https://github.com/minad/vertico) with [vertico-posframe](https://github.com/tumashu/vertico-posframe), which gives me a nice childframe for mine.
 >
 > In case you're interested, you can get rounded corners (on Mac OS) and fringes (Mac OS &amp; Linux) by setting the variable `vertico-posframe-paramters` with the following settings:
 >
@@ -60,14 +68,6 @@ Then, `M-<return>` gives me a minibuffer with available code actions.
 >                                     (right-fringe . 12)
 >                                     (undecorated  . nil)))
 > ```
-
-And `C-M-.` pops up an `xref` buffer where I can see all references to a function, in which I can select an entry and jump to the call site.
-
-{{< figure src="/img/lsp-xref.png" link="/img/lsp-xref.png" >}}
-
-I can also press `C-c r` to rename a symbol as you'd expect.
-
-{{< figure src="/img/lsp-rename.png" link="/img/lsp-rename.png" >}}
 
 
 ## Diagnostics {#diagnostics}
@@ -81,9 +81,9 @@ LSP mode automatically tries to figure out which diagnostics tool you're using, 
          (clojurec-mode . lsp)
          (lsp-mode      . lsp-enable-which-key-integration))
   :bind (:map lsp-mode-map
-              ("M-<return>" . lsp-execute-code-action)
               ("C-M-."      . lsp-find-references)
-              ("C-c r"      . lsp-rename))
+              ("C-c r"      . lsp-rename)
+              ("M-<return>" . lsp-execute-code-action))
   :config
   (setq lsp-diagnostics-provider :flycheck))
 ````
@@ -104,9 +104,9 @@ From this point onwards, the LSP server works really well on my machine for Cloj
          (clojurec-mode . lsp)
          (lsp-mode      . lsp-enable-which-key-integration))
   :bind (:map lsp-mode-map
-              ("M-<return>" . lsp-execute-code-action)
               ("C-M-."      . lsp-find-references)
-              ("C-c r"      . lsp-rename))
+              ("C-c r"      . lsp-rename)
+              ("M-<return>" . lsp-execute-code-action))
   :config
   (setq lsp-diagnostics-provider :flycheck)
         ;; Disable visual features
@@ -156,9 +156,9 @@ And here's the final configuration that I'm using for Clojure as of September 20
          (clojurec-mode      . lsp)
          (lsp-mode           . lsp-enable-which-key-integration))
   :bind (:map lsp-mode-map
-              ("M-<return>" . lsp-execute-code-action)
               ("C-M-."      . lsp-find-references)
-              ("C-c r"      . lsp-rename))
+              ("C-c r"      . lsp-rename)
+              ("M-<return>" . lsp-execute-code-action))
   :config
   (setq lsp-diagnostics-provider :flycheck)
         ;; Disable visual features
