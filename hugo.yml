@@ -66,11 +66,11 @@ params:
     # images: ["papermod-cover.png"]
 
     homeInfoParams:
-        Title: "Hi! I'm Sophie."
+        Title: "λ Hi! I'm Sophie."
         Content: >
-          I work at Ardoq where I get to code Clojure on the backend.
+          I work as a software engineer at Ardoq, where I get to code Clojure on the backend.
 
-          I'm also fond of Haskell and I'm a devout Emacs enthusiast.
+          I'm also fond of Haskell and a real Emacs enthusiast.
           
           I write mostly about functional programming and Emacs configuration.
           
