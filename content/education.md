@@ -1,11 +1,12 @@
 +++
-title = "Education"
 author = ["Sophie Adeline Solheim Bosio"]
-date = 2023-06-08T14:48:00+02:00
 draft = false
 +++
 
-## MSc {#msc}
+## <span class="org-todo done DONE">DONE</span> Education {#education}
+
+
+### MSc {#msc}
 
 I have a master's degree in [Programming and System Architecture](https://www.uio.no/studier/program/informatikk-programmering-master/) from the [University of Oslo](https://www.uio.no/), Norway, with a specialisation in software. 🌱
 
@@ -14,7 +15,7 @@ My thesis project and thesis text are available on [GitHub](https://github.com/S
 The courses I have taken at UiO are briefly summarised below.
 
 <details>
-<summary>Courses in Programming and System Architecture at UiO</summary>
+<summary>Courses in Programming and System Architecture at UiO in Order</summary>
 <div class="details">
 
 -   [IN5130](https://www.uio.no/studier/emner/matnat/ifi/IN5130/index-eng.html) - Modelling Unassailable IT-Systems
@@ -28,7 +29,7 @@ The courses I have taken at UiO are briefly summarised below.
 </details>
 
 
-## BSc {#bsc}
+### BSc {#bsc}
 
 I have a bachelor's degree in [Cognitive Science](https://www.uib.no/en/studies/BASV-KOGNI) from the [University of Bergen](https://www.uib.no/), Norway.
 
@@ -45,13 +46,13 @@ During my BSc, I had an exchange semester at the
 [University of Bologna](https://www.unibo.it/it), Italy. The relevant courses from my exchange are appended to the list.
 
 <details>
-<summary>Courses in Cognitive Science at UiB</summary>
+<summary>Courses in Cognitive Science at UiB in Order</summary>
 <div class="details">
 
--   [KOGVIT101](https://www.uib.no/emne/KOGVIT101) - Introduction to the Cognitive Sciences
+-   [KOGVIT101](https://www.uib.no/emne/KOGVIT101) - Introduction to Cognitive Science
 -   [INF100](https://www.uib.no/en/course/INF101) - Introduction to Programming (Python)
 -   [EXFAC00SK](https://www.uib.no/en/course/EXFAC00SK) - Basic Linguistics
--   [DASPSTAT](https://www.uib.no/en/course/DASPSTAT) - Statistics for the Cognitive Sciences
+-   [DASPSTAT](https://www.uib.no/en/course/DASPSTAT) - Statistics for Cognitive Science
 -   [LOG110](https://www.uib.no/en/course/LOG110) - Introduction to Formal Logic
 -   [LOG111](https://www.uib.no/en/course/LOG111) - Deduction and Meta-Logic
 -   [INF101](https://www.uib.no/en/course/INF101) - Object-Oriented Programming (Java)
