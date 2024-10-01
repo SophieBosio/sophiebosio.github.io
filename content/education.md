@@ -15,7 +15,7 @@ My thesis project and thesis text are available on [GitHub](https://github.com/S
 The courses I have taken at UiO are briefly summarised below.
 
 <details>
-<summary>Courses in Programming and System Architecture at UiO in Order</summary>
+<summary>Courses in Programming and System Architecture at UiO (in order of attendance)</summary>
 <div class="details">
 
 -   [IN5130](https://www.uio.no/studier/emner/matnat/ifi/IN5130/index-eng.html) - Modelling Unassailable IT-Systems
@@ -46,7 +46,7 @@ During my BSc, I had an exchange semester at the
 [University of Bologna](https://www.unibo.it/it), Italy. The relevant courses from my exchange are appended to the list.
 
 <details>
-<summary>Courses in Cognitive Science at UiB in Order</summary>
+<summary>Courses in Cognitive Science at UiB (in order of attendance)</summary>
 <div class="details">
 
 -   [KOGVIT101](https://www.uib.no/emne/KOGVIT101) - Introduction to Cognitive Science
