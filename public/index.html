@@ -2,7 +2,7 @@
 <html lang="en" dir="auto">
 
 <head>
-	<meta name="generator" content="Hugo 0.134.2"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.136.5"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -11,7 +11,7 @@
 <meta name="description" content="Blog - Sophie Bosio">
 <meta name="author" content="Sophie Bosio">
 <link rel="canonical" href="http://localhost:1313/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.0c4fd3725171366f335155acde6fb3c7b7042cd2fd075bebf5023d9b28a701b2.css" integrity="sha256-DE/TclFxNm8zUVWs3m&#43;zx7cELNL9B1vr9QI9myinAbI=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/static/img/favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/static/img/favicon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/static/img/favicon.png">
@@ -39,7 +39,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -119,8 +119,6 @@
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
-                <ul class="lang-switch"><li>|</li>
-                </ul>
             </div>
         </div>
         <ul id="menu">
@@ -165,14 +163,15 @@
     </header>
     <div class="entry-content">
         I work as a software engineer at Ardoq, where I get to code Clojure on the backend.
-I&rsquo;m also fond of Haskell and a real Emacs enthusiast.
+I&rsquo;m also fond of Haskell and I&rsquo;m a real Emacs enthusiast!
 I write mostly about functional programming and Emacs configuration.
 Away from the computer, I have an above-average interest in coffee.
 And when I&rsquo;m not learning programming languages, I like to try my hand at learning natural ones. 🌱
     </div>
     <footer class="entry-footer">
-        <div class="social-icons">
-    <a href="https://github.com/SophieBosio" target="_blank" rel="noopener noreferrer me" title="Github">
+        <div class="social-icons" >
+    <a href="https://github.com/SophieBosio" target="_blank" rel="noopener noreferrer me"
+        title="Github">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
     <path
@@ -180,14 +179,16 @@ And when I&rsquo;m not learning programming languages, I like to try my hand at 
     </path>
 </svg>
     </a>
-    <a href="mailto:sophie.bosio@outlook.com" target="_blank" rel="noopener noreferrer me" title="Email">
+    <a href="mailto:sophie.bosio@outlook.com" target="_blank" rel="noopener noreferrer me"
+        title="Email">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 21" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
     <polyline points="22,6 12,13 2,6"></polyline>
 </svg>
     </a>
-    <a href="index.xml" target="_blank" rel="noopener noreferrer me" title="Rss">
+    <a href="index.xml" target="_blank" rel="noopener noreferrer me"
+        title="Rss">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 11a9 9 0 0 1 9 9" />
@@ -202,20 +203,20 @@ And when I&rsquo;m not learning programming languages, I like to try my hand at 
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>Setting Up Emacs LSP-Mode For Clojure
+    <h2 class="entry-hint-parent">Setting Up Emacs LSP-Mode For Clojure
     </h2>
   </header>
   <div class="entry-content">
     <p>I use Clojure on the backend where I work. I think it’s really fun, especially in combination with Emacs, since Emacs is built with Emacs Lisp and Clojure is a Lisp dialect. So many of Emacs’ default keybindings started clicking for me once I started working with a language in the same tradition, editing structurally and by semantic units rather than line-by-line or character-by-character. I’m not alone in loving both and there’s clearly a lot of overlap between the two communities, which is evident from the number of Clojure packages for Emacs.
 ...</p>
   </div>
-  <footer class="entry-footer">&lt;span title=&#39;2024-09-17 22:42:00 &#43;0200 CEST&#39;&gt;September 17, 2024&lt;/span&gt;&amp;nbsp;·&amp;nbsp;5 min&amp;nbsp;·&amp;nbsp;Sophie Adeline Solheim Bosio</footer>
+  <footer class="entry-footer"><span title='2024-09-17 22:42:00 +0200 CEST'>September 17, 2024</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;Sophie Adeline Solheim Bosio</footer>
   <a class="entry-link" aria-label="post link to Setting Up Emacs LSP-Mode For Clojure" href="http://localhost:1313/posts/lsp-mode-for-clojure/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>Building Your First Emacs Config
+    <h2 class="entry-hint-parent">Building Your First Emacs Config
     </h2>
   </header>
   <div class="entry-content">
@@ -223,13 +224,13 @@ And when I&rsquo;m not learning programming languages, I like to try my hand at 
 One of the many things that make Emacs great, though, is its dedicated and helpful user base. I hope to add a small contribution to that community with this post, going over what I would have told my past self as I was just starting out using Emacs and trying to write my first Emacs configuration file.
 ...</p>
   </div>
-  <footer class="entry-footer">&lt;span title=&#39;2023-12-21 23:29:00 &#43;0100 CET&#39;&gt;December 21, 2023&lt;/span&gt;&amp;nbsp;·&amp;nbsp;13 min&amp;nbsp;·&amp;nbsp;Sophie</footer>
+  <footer class="entry-footer"><span title='2023-12-21 23:29:00 +0100 CET'>December 21, 2023</span>&nbsp;·&nbsp;13 min&nbsp;·&nbsp;Sophie</footer>
   <a class="entry-link" aria-label="post link to Building Your First Emacs Config" href="http://localhost:1313/posts/first-emacs-config/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>Prettifying Emacs Org Mode
+    <h2 class="entry-hint-parent">Prettifying Emacs Org Mode
     </h2>
   </header>
   <div class="entry-content">
@@ -237,13 +238,13 @@ One of the many things that make Emacs great, though, is its dedicated and helpf
 All that being said, I was inspired to tweak the look of my Org Mode setup, especially after reading the blog post Beautifying Org Mode in Emacs. Below you can find screenshots and code. I hope there’s something in here that you might want to steal for your own config! In case I change these settings later, my most recently updated config is always available on my GitHub.
 ...</p>
   </div>
-  <footer class="entry-footer">&lt;span title=&#39;2023-08-10 22:19:00 &#43;0200 CEST&#39;&gt;August 10, 2023&lt;/span&gt;&amp;nbsp;·&amp;nbsp;9 min&amp;nbsp;·&amp;nbsp;Sophie</footer>
+  <footer class="entry-footer"><span title='2023-08-10 22:19:00 +0200 CEST'>August 10, 2023</span>&nbsp;·&nbsp;9 min&nbsp;·&nbsp;Sophie</footer>
   <a class="entry-link" aria-label="post link to Prettifying Emacs Org Mode" href="http://localhost:1313/posts/prettifying-emacs-org-mode/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>Static Site Generation with Hugo
+    <h2 class="entry-hint-parent">Static Site Generation with Hugo
     </h2>
   </header>
   <div class="entry-content">
@@ -251,13 +252,40 @@ All that being said, I was inspired to tweak the look of my Org Mode setup, espe
 Org mode is a really clever and powerful plain text format that works great for note taking, text editing, and TODO lists/agendas. Moreover, there are a lot of convenient features for us Emacs users when using ox-hugo to write our blogs (besides staying in the comfort of a well-known format and editing flow).
 ...</p>
   </div>
-  <footer class="entry-footer">&lt;span title=&#39;2023-06-08 12:18:00 &#43;0200 CEST&#39;&gt;June 8, 2023&lt;/span&gt;&amp;nbsp;·&amp;nbsp;1 min&amp;nbsp;·&amp;nbsp;Sophie</footer>
+  <footer class="entry-footer"><span title='2023-06-08 12:18:00 +0200 CEST'>June 8, 2023</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Sophie</footer>
   <a class="entry-link" aria-label="post link to Static Site Generation with Hugo" href="http://localhost:1313/posts/hugo/"></a>
 </article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Demystifying Monads - Part 1/3
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Zachary Tellman opens his book Elements of Clojure by explaining the concept of tacit knowledge. Paraphrasing, it’s all the innate/implicit/subconscious knowledge that we have acquired through experience and, because we didn’t learn it in a straightforward manner ourselves, often struggle to explain clearly to others. The result is that others, too, have to go through a frustrating and non-linear process to learn it.
+I think this is what often happens with monads, which mystify and confuse a lot of people. If they’re like me, it’s because they’re ambushed by it while checking out a purely functional language like Haskell for the first time.
+...</p>
+  </div>
+  <footer class="entry-footer">8 min&nbsp;·&nbsp;Sophie Adeline Solheim Bosio</footer>
+  <a class="entry-link" aria-label="post link to Demystifying Monads - Part 1/3" href="http://localhost:1313/posts/demystifying-monads-1/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="http://localhost:1313/page/2/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="http://localhost:1313/">Sophie Bosio</a></span>
+        <span>&copy; 2024 <a href="http://localhost:1313/">Sophie Bosio</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

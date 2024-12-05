@@ -4,23 +4,21 @@
     <title>Sophie Bosio</title>
     <link>http://localhost:1313/</link>
     <description>Recent content on Sophie Bosio</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.136.5</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 17 Sep 2024 22:42:00 +0200</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 17 Sep 2024 22:42:00 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Setting Up Emacs LSP-Mode For Clojure</title>
       <link>http://localhost:1313/posts/lsp-mode-for-clojure/</link>
       <pubDate>Tue, 17 Sep 2024 22:42:00 +0200</pubDate>
-      
       <guid>http://localhost:1313/posts/lsp-mode-for-clojure/</guid>
       <description>&lt;p&gt;I use &lt;a href=&#34;https://clojure.org/&#34;&gt;Clojure&lt;/a&gt; on the backend &lt;a href=&#34;https://www.ardoq.com/&#34;&gt;where I work&lt;/a&gt;. I think it&amp;rsquo;s really fun, especially in combination with Emacs, since Emacs is built with Emacs Lisp and Clojure is a Lisp dialect. So many of Emacs&amp;rsquo; default keybindings started clicking for me once I started working with a language in the same tradition, editing structurally and by semantic units rather than line-by-line or character-by-character. I&amp;rsquo;m not alone in loving both and there&amp;rsquo;s clearly a lot of overlap between the two communities, which is evident from the number of Clojure packages for Emacs.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Building Your First Emacs Config</title>
       <link>http://localhost:1313/posts/first-emacs-config/</link>
       <pubDate>Thu, 21 Dec 2023 23:29:00 +0100</pubDate>
-      
       <guid>http://localhost:1313/posts/first-emacs-config/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt; is a wonderful piece of software. It&amp;rsquo;s easily my favourite program of all
 time. It can also be a little overwhelming to configure for the first time.&lt;/p&gt;
@@ -29,12 +27,10 @@ helpful user base. I hope to add a small contribution to that community with
 this post, going over what I would have told my past self as I was just starting
 out using Emacs and trying to write my first Emacs configuration file.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Prettifying Emacs Org Mode</title>
       <link>http://localhost:1313/posts/prettifying-emacs-org-mode/</link>
       <pubDate>Thu, 10 Aug 2023 22:19:00 +0200</pubDate>
-      
       <guid>http://localhost:1313/posts/prettifying-emacs-org-mode/</guid>
       <description>&lt;p&gt;In my opinion, the power of Emacs is that you&amp;rsquo;re able to program your own
 working environment. Other editors may be just as, or possibly more, efficient
@@ -49,12 +45,10 @@ hope there&amp;rsquo;s something in here that you might want to steal for your o
 In case I change these settings later, my most recently updated config is always
 available on my &lt;a href=&#34;https://github.com/SophieBosio/.emacs.d&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>About</title>
       <link>http://localhost:1313/about/</link>
       <pubDate>Thu, 08 Jun 2023 17:43:00 +0200</pubDate>
-      
       <guid>http://localhost:1313/about/</guid>
       <description>&lt;p&gt;I&amp;rsquo;m Sophie! I was born in Oslo in 1999, and after some moving back and forth
 for my studies, I&amp;rsquo;m back in my home city.&lt;/p&gt;
@@ -63,29 +57,10 @@ for my studies, I&amp;rsquo;m back in my home city.&lt;/p&gt;
 &lt;p&gt;I recently graduated with an MSc from the University of Oslo, where I wrote my thesis on &lt;a href=&#34;https://medium.com/criteo-engineering/introduction-to-property-based-testing-f5236229d237&#34;&gt;property-based
 testing&lt;/a&gt;. I designed and implemented a small functional language called &lt;a href=&#34;https://github.com/SophieBosio/contra&#34;&gt;Contra&lt;/a&gt;, which has native support for defining properties and a built-in property-checker. It&amp;rsquo;s capable of automatically generating counterexamples, even for user-defined algebraic data types, using SMT solving.&lt;/p&gt;</description>
     </item>
-    
-    <item>
-      <title>Education</title>
-      <link>http://localhost:1313/education/</link>
-      <pubDate>Thu, 08 Jun 2023 14:48:00 +0200</pubDate>
-      
-      <guid>http://localhost:1313/education/</guid>
-      <description>&lt;h2 id=&#34;bsc&#34;&gt;BSc&lt;/h2&gt;
-&lt;p&gt;I have a bachelor&amp;rsquo;s degree in &lt;a href=&#34;https://www.uib.no/en/studies/BASV-KOGNI&#34;&gt;Cognitive Science&lt;/a&gt; from the &lt;a href=&#34;https://www.uib.no/&#34;&gt;University of Bergen&lt;/a&gt;, Norway.&lt;/p&gt;
-&lt;p&gt;The full course plan for the degree can be found at the university&amp;rsquo;s websites,
-but unfortunately, the &lt;a href=&#34;https://www.uib.no/infomedia/154615/tatt-opp-p%C3%A5-kogvit-f%C3%B8r-2022&#34;&gt;relevant plan&lt;/a&gt; (admission in 2019) is only available in
-Norwegian.&lt;/p&gt;
-&lt;p&gt;Most of the course pages do however have an English version. A brief overview
-with links is
-provided below for the reader&amp;rsquo;s convenience. Programming languages used in the
-courses have been added in parentheses where relevant.&lt;/p&gt;</description>
-    </item>
-    
     <item>
       <title>Static Site Generation with Hugo</title>
       <link>http://localhost:1313/posts/hugo/</link>
       <pubDate>Thu, 08 Jun 2023 12:18:00 +0200</pubDate>
-      
       <guid>http://localhost:1313/posts/hugo/</guid>
       <description>&lt;p&gt;This website is built with &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; and &lt;a href=&#34;https://ox-hugo.scripter.co/&#34;&gt;&lt;code&gt;ox-hugo&lt;/code&gt;&lt;/a&gt;, an exporting engine that lets me
 write my posts in &lt;a href=&#34;https://orgmode.org/&#34;&gt;Org mode&lt;/a&gt; and then put it online easily.&lt;/p&gt;
@@ -94,7 +69,49 @@ taking, text editing, and TODO lists/agendas. Moreover, there are a lot of
 convenient features for us Emacs users when using &lt;code&gt;ox-hugo&lt;/code&gt; to write our blogs
 (besides staying in the comfort of a well-known format and editing flow).&lt;/p&gt;</description>
     </item>
-    
-    
+    <item>
+      <title></title>
+      <link>http://localhost:1313/education/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/education/</guid>
+      <description>&lt;h2 id=&#34;education&#34;&gt;&lt;span class=&#34;org-todo done DONE&#34;&gt;DONE&lt;/span&gt; Education&lt;/h2&gt;
+&lt;h3 id=&#34;msc&#34;&gt;MSc&lt;/h3&gt;
+&lt;p&gt;I have a master&amp;rsquo;s degree in &lt;a href=&#34;https://www.uio.no/studier/program/informatikk-programmering-master/&#34;&gt;Programming and System Architecture&lt;/a&gt; from the &lt;a href=&#34;https://www.uio.no/&#34;&gt;University of Oslo&lt;/a&gt;, Norway, with a specialisation in software. 🌱&lt;/p&gt;
+&lt;p&gt;My thesis project and thesis text are available on &lt;a href=&#34;https://github.com/SophieBosio/contra&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The courses I have taken at UiO are briefly summarised below.&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;Courses in Programming and System Architecture at UiO (in order of attendance)&lt;/summary&gt;
+&lt;div class=&#34;details&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.uio.no/studier/emner/matnat/ifi/IN5130/index-eng.html&#34;&gt;IN5130&lt;/a&gt; - Modelling Unassailable IT-Systems&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.uio.no/studier/emner/matnat/ifi/IN5170/index-eng.html&#34;&gt;IN5170&lt;/a&gt; - Models of Concurrency&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.uio.no/studier/emner/matnat/its/TEK5510/index-eng.html&#34;&gt;TEK5510&lt;/a&gt; - Security in Operating Systems and Software&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.uio.no/studier/emner/matnat/ifi/IN5570/index-eng.html&#34;&gt;IN5570&lt;/a&gt; - Distributed Objects&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.uio.no/studier/emner/matnat/ifi/IN5580/&#34;&gt;IN5580&lt;/a&gt; - Computability Theory&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.uio.no/studier/emner/matnat/ifi/INF5110/&#34;&gt;INF5110&lt;/a&gt; - Compiler Construction&lt;/li&gt;
+&lt;li&gt;Special Curriculum - Advanced Functional Programming, Semantics, and Types&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/details&gt;
+&lt;h3 id=&#34;bsc&#34;&gt;BSc&lt;/h3&gt;
+&lt;p&gt;I have a bachelor&amp;rsquo;s degree in &lt;a href=&#34;https://www.uib.no/en/studies/BASV-KOGNI&#34;&gt;Cognitive Science&lt;/a&gt; from the &lt;a href=&#34;https://www.uib.no/&#34;&gt;University of Bergen&lt;/a&gt;, Norway.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Demystifying Monads - Part 1/3</title>
+      <link>http://localhost:1313/posts/demystifying-monads-1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/demystifying-monads-1/</guid>
+      <description>&lt;p&gt;Zachary Tellman opens his book &lt;em&gt;Elements of Clojure&lt;/em&gt; by explaining the concept of &lt;em&gt;tacit knowledge&lt;/em&gt;. Paraphrasing, it&amp;rsquo;s all the innate/implicit/subconscious knowledge that we have acquired through experience and, because we didn&amp;rsquo;t learn it in a straightforward manner ourselves, often struggle to explain clearly to others. The result is that others, too, have to go through a frustrating and non-linear process to learn it.&lt;/p&gt;
+&lt;p&gt;I think this is what often happens with monads, which mystify and confuse a lot of people. If they&amp;rsquo;re like me, it&amp;rsquo;s because they&amp;rsquo;re ambushed by it while checking out a purely functional language like Haskell for the first time.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Demystifying Monads - Part 2/3</title>
+      <link>http://localhost:1313/posts/demystifying-monads-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/demystifying-monads-2/</guid>
+      <description>&lt;p&gt;In the previous entry of this blog post series, we covered some of the theory of monads and motivated their use in the general case. This time, we&amp;rsquo;ll take a crack at a practical example.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll implement our own, specialised version of the Writer monad. My explanation takes lots of inspiration from the videos &amp;hellip; and &amp;hellip;, both available on YouTube.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll start with a practical example and incrementally work our way to a complete monad. Once we&amp;rsquo;ve seen how one monad works, I want to show how we can generalise the monad pattern to solve different problems. But that deserves its own blog post, so we&amp;rsquo;ll save it for Part 3 of this series.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>

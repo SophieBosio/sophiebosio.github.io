@@ -1,12 +1,11 @@
 +++
+title = "Education"
 author = ["Sophie Adeline Solheim Bosio"]
+date = 2023-06-08T14:48:00+02:00
 draft = false
 +++
 
-## <span class="org-todo done DONE">DONE</span> Education {#education}
-
-
-### MSc {#msc}
+## MSc {#msc}
 
 I have a master's degree in [Programming and System Architecture](https://www.uio.no/studier/program/informatikk-programmering-master/) from the [University of Oslo](https://www.uio.no/), Norway, with a specialisation in software. 🌱
 
@@ -29,7 +28,7 @@ The courses I have taken at UiO are briefly summarised below.
 </details>
 
 
-### BSc {#bsc}
+## BSc {#bsc}
 
 I have a bachelor's degree in [Cognitive Science](https://www.uib.no/en/studies/BASV-KOGNI) from the [University of Bergen](https://www.uib.no/), Norway.
 
