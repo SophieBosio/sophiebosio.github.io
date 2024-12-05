@@ -26,9 +26,6 @@
     <loc>http://localhost:1313/about/</loc>
     <lastmod>2023-06-08T17:43:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/education/</loc>
-    <lastmod>2023-06-08T14:48:00+02:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/categories/</loc>
     <lastmod>2023-06-08T12:18:00+02:00</lastmod>
   </url><url>
@@ -37,6 +34,16 @@
   </url><url>
     <loc>http://localhost:1313/categories/tech/</loc>
     <lastmod>2023-06-08T12:18:00+02:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/education/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/demystifying-monads-2/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/functionalprogramming/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/haskell/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/monads/</loc>
   </url><url>
     <loc>http://localhost:1313/search/</loc>
   </url><url>
