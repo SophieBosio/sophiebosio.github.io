@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Demystifying Monads - Part 2/3 | Sophie Bosio</title>
+<meta name="keywords" content="functionalprogramming, haskell, monads">
+<meta name="description" content="In the previous entry of this blog post series, we covered some of the theory of monads and motivated their use in the general case. This time, we&rsquo;ll take a crack at a practical example.
+We&rsquo;ll implement our own, specialised version of the Writer monad. My explanation takes lots of inspiration from the videos &hellip; and &hellip;, both available on YouTube.
+We&rsquo;ll start with a practical example and incrementally work our way to a complete monad. Once we&rsquo;ve seen how one monad works, I want to show how we can generalise the monad pattern to solve different problems. But that deserves its own blog post, so we&rsquo;ll save it for Part 3 of this series.">
+<meta name="author" content="Sophie Adeline Solheim Bosio">
+<link rel="canonical" href="http://localhost:1313/posts/demystifying-monads-2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/static/img/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/static/img/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/static/img/favicon.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/static/img/favicon.png">
+<link rel="mask-icon" href="http://localhost:1313/static/img/favicon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/demystifying-monads-2/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Demystifying Monads - Part 2/3" />
+<meta property="og:description" content="In the previous entry of this blog post series, we covered some of the theory of monads and motivated their use in the general case. This time, we&rsquo;ll take a crack at a practical example.
+We&rsquo;ll implement our own, specialised version of the Writer monad. My explanation takes lots of inspiration from the videos &hellip; and &hellip;, both available on YouTube.
+We&rsquo;ll start with a practical example and incrementally work our way to a complete monad. Once we&rsquo;ve seen how one monad works, I want to show how we can generalise the monad pattern to solve different problems. But that deserves its own blog post, so we&rsquo;ll save it for Part 3 of this series." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/demystifying-monads-2/" /><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Demystifying Monads - Part 2/3"/>
+<meta name="twitter:description" content="In the previous entry of this blog post series, we covered some of the theory of monads and motivated their use in the general case. This time, we&rsquo;ll take a crack at a practical example.
+We&rsquo;ll implement our own, specialised version of the Writer monad. My explanation takes lots of inspiration from the videos &hellip; and &hellip;, both available on YouTube.
+We&rsquo;ll start with a practical example and incrementally work our way to a complete monad. Once we&rsquo;ve seen how one monad works, I want to show how we can generalise the monad pattern to solve different problems. But that deserves its own blog post, so we&rsquo;ll save it for Part 3 of this series."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Demystifying Monads - Part 2/3",
+      "item": "http://localhost:1313/posts/demystifying-monads-2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Demystifying Monads - Part 2/3",
+  "name": "Demystifying Monads - Part 2\/3",
+  "description": "In the previous entry of this blog post series, we covered some of the theory of monads and motivated their use in the general case. This time, we\u0026rsquo;ll take a crack at a practical example.\nWe\u0026rsquo;ll implement our own, specialised version of the Writer monad. My explanation takes lots of inspiration from the videos \u0026hellip; and \u0026hellip;, both available on YouTube.\nWe\u0026rsquo;ll start with a practical example and incrementally work our way to a complete monad. Once we\u0026rsquo;ve seen how one monad works, I want to show how we can generalise the monad pattern to solve different problems. But that deserves its own blog post, so we\u0026rsquo;ll save it for Part 3 of this series.\n",
+  "keywords": [
+    "functionalprogramming", "haskell", "monads"
+  ],
+  "articleBody": "In the previous entry of this blog post series, we covered some of the theory of monads and motivated their use in the general case. This time, we’ll take a crack at a practical example.\nWe’ll implement our own, specialised version of the Writer monad. My explanation takes lots of inspiration from the videos … and …, both available on YouTube.\nWe’ll start with a practical example and incrementally work our way to a complete monad. Once we’ve seen how one monad works, I want to show how we can generalise the monad pattern to solve different problems. But that deserves its own blog post, so we’ll save it for Part 3 of this series.\nI’ll be using Haskell in the code examples below, but I’ll try my best to explain concepts underway so you can follow along even if you haven’t used Haskell before.\nA Running Example Say you have two pure functions, inc and sqr, that increments and squares a number, respectively. It takes an Int and returns an Int. In Haskell, this is what it would look like:\ninc :: Int -\u003e Int -- Type signature inc a = a + 1 -- Implementation sqr :: Int -\u003e Int sqr a = a * a Now say we want to add logging to each function so that we can run a computation like this:\nIncrement 5 Increment the previous result Square the previous result Increment the previous result Let our log be a list of strings.\ndata Log = [String] The final result should give us both the number and the following log:\n[\"Incremented 5\", \"Incremented 6\", \"Squared 7\", \"Incremented 49\"] If we pretend Haskell is an imperative language, we could imagine that we had a mutable variable log that we could append to. Let’s just take the case of inc, since the procedure would be the same for sqr.\nlog :: [String] log = [] inc :: Int -\u003e Int inc a = log += \"Incremented \" ++ show a return (a + 1) This function would no longer be pure and it would be impossible from the call site to see that it modified the log.\nIn Haskell, it is also illegal. Our function can only know about what is immutable or explicitly passed to it as an argument.\nTo fix this, we could also take the old log as argument and return the new log. Our new function takes and returns a tuple with an integer and a log.\nNOTE:\nIn Haskell, you can prepend an element to a string using the cons operator : but to append, you must use the list concatenation operator ++ and append a singleton list. That’s why the string below is in square brackets.\nWe also convert integers to strings using the show operator.\ndata Log = [String] inc :: (Int, Log) -\u003e (Int, Log) inc (a, oldLog) = (a + 1, oldLog ++ [\"Incremented \" ++ show a]) At first glance, this looks fine, right? Now our function is completely pure again!\nBut there’s a subtle problem with this approach: Why does our simple arithmetic function know about list concatenation?\nWe’re mixing concerns here, since we are both incrementing integers and adding a new log string to the existing logs.\nIf we had a bunch of functions with added logging, but realised later that we wanted a different data structure for our logs and redefined the Log data type, we would also have to change the list concatenation operator ++ in every single function definition implementing logging.\nLater, we’ll see how we can return just the string that we’d like to add to the logs. Then the concrete data structure and the operation used to accumulate the logs becomes opaque to the inc function.\nBut for now, let’s stick with the singleton list, because it will make our types a little clearer.\ninc' :: Int -\u003e (Int, Log) inc' a = (a + 1, [\"Incremented \" ++ show a]) Nice, now we can write functions that just deal with values.\nBut now we have a new problem.\nWe can run our computations the way we want, but we need to write a new function. Let’s call it runComputations.\nIt needs to take the result from each function call and thread/pipe it to the next computation and also accumulates the log fragments. We can do this by binding each intermediary result in a let-binding.\ndata Log = [String] inc :: Int -\u003e (Int, Log) inc a = (a + 1, [\"Incremented \" ++ show a]) sqr :: Int -\u003e (Int, Log) sqr a = (a * a, [\"Squared \" ++ show a]) runComputations :: (Int, Log) runComputations = let (result1, log1) = inc 5 in let (result2, log2) = inc result1 in let (result3, log3) = sqr result2 in let (result4, log4) = inc result3 in (result4, log1 ++ log2 ++ log3 ++ log4) In the Haskell REPL, called GHCi, we can now run our computations and get the desired result:\nghci\u003e runComputations (50, [\"Incremented 5\", \"Incremented 6\", \"Squared 7\", \"Incremented 49\"]) Well, it’s pure and cleanly separates concerns, but… It’s ugly and verbose. We’re binding a series of temporary variables that are only really used to thread the values to the next computations. And worse, adding a new computation in the middle of the chain requires several changes to the code.\nrunComputations :: (Int, Log) runComputations = let (result1, log1) = inc 5 in let (result2, log2) = sqr result1 in -- Add this line -- Change all temp vars in the following lines: let (result3, log3) = inc result2 in let (result4, log4) = sqr result3 in let (result5, log5) = inc result4 in -- Add an extra log fragment to the result: (result5, log1 ++ log2 ++ log3 ++ log4 ++ log5) So in essence, we’d like to compose our modified functions.\nComposing Kleisli Arrows Let’s take a cue from category theory and go abstract. Our two functions, inc and sqr are functions that originally took an integer and returned an integer. Now, we’ve proposed two modified functions, that each take an integer and return an integer plus a log string. Let’s mark the new ones with an apostrophe.\n-- Old definitions: inc :: Int -\u003e Int sqr :: Int -\u003e Int -- New definitions: inc' :: Int -\u003e (Int, Log) sqr' :: Int -\u003e (Int, Log) This kind of function, which take a type and return a type plus something extra, is an example of Kleisli arrows. An arrow is a generalisation of function-like things.\nNow, we’d like to compose these functions.\nWith the original, simple arithmetic functions, this is easy. They take and return integers, so they are trivially composable.\nBut our Kleisli arrows are harder to work with. To compose these functions, we can essentially do what we did before with the let-bindings. Instead of composing the functions themselves, we can can take the result of one function and use the next function on it.\nWe’ll take the number from the result of the previous computation and pipe it into the next computation. Then we want to bind the result of that computation to a temporary variable so that we can access the number and log string in the new result. The final result should have the new number and the concatenation of the old log strings and the new one.\nFor no particular reason, let’s use the weird symbol \u003e\u003e= for this operation. It’s called “bind”, and I imagine it’s because we bind the intermediary result in a temporary variable – but that’s just my guess.\n(\u003e\u003e=) :: (Int, Log) -\u003e (Int -\u003e (Int, Log)) -\u003e (Int, Log) (a, oldLog) \u003e\u003e= f = let (b, newLog) = f a in -- where f is a function like inc' or sqr' (b, oldLog ++ newLog) Sweet! Now the let-binding only exists inside this function and we can write a much nicer version of the code above where we previously had a ton of let-bindings:\nrunComputations :: (Int, Log) runComputations = inc 5 \u003e\u003e= sqr \u003e\u003e= inc \u003e\u003e= sqr \u003e\u003e= inc If we have a function that does something more, we might want to create a way for a function to return a result of the type (Int, Log) so it can be chained together with the rest of our functions.\nThis function is called “return”. Its only job is to take an integer and create a result with no new log string. When chained together with other functions with \u003e\u003e=, it shouldn’t change the logs and since \u003e\u003e= combines the old log with the new by concatenating them, our only choice is the empty list []. Concatenating a list with the empty list returns the original list, making it the identity element of lists under concatenation.\nreturn :: Int -\u003e (Int, Log) return a = (a, []) Now we can create new functions that also return (Int, Log) without updating the logs.\ndouble :: Int -\u003e Int double a = a * 2 plus :: Int -\u003e Int -\u003e Int plus a b = a + b foo :: Int -\u003e (Int, Log) foo a = return (double (plus a 5)) And we can use foo in our chain of computations.\nrunComputations :: (Int, Log) runComputations = inc 5 \u003e\u003e= sqr \u003e\u003e= inc \u003e\u003e= sqr \u003e\u003e= inc \u003e\u003e= foo \u003e\u003e= -- This works now! inc A pretty good improvement.\nBut of course, we’re working with a typed language and so we’d like to create a type for all of this!\nWhat is the point of creating a type, though, when this works so well?\nAdvantages of Monads One advantage is that we can see statically that a function performs side effects and we can see this:\nIn the type signature In the definition At all its call sites Another is that with a type, we can create a strict interface of functions that interact with our log to ensure that only permitted reads and writes are possible.\nAnd finally, when something looks kind of like a monad, we benefit from actually implementing it as such, because it means that all the properties that apply to monads also apply to our type.\nDefining the LogWriter Monad Previously, we had functions that took an Int and returned a (Int, Log). Now, we’d like to create a type for the result where the “bind” and “return” functions are built into the type.\nA monad is not exactly a type, though. It’s a transformation that takes a type and creates a new type. In other words, it’s a parametrised type or a type constructor.\nIn our case, the logs are our “side-effecting” stuff and the fact that we’re doing arithmetic is incidental. Therefore, our log writing mechanisms are what constitutes our monad and Int is the type that it takes for us.\nLet’s call our monad LogWriter and let it take a type as its parameter.\nnewtype LogWriter a = ... Now, the type constructor also needs a concrete value constructor. By convention, the two use the same name. In our case, both would be LogWriter. But for the sake of clarity, let’s call the value constructor LogContainer.\nTo create a value of the type LogWriter Int, we use the LogContainer constructor to wrap a value like (5, [\"Squared 2\", \"Incremented 4\"]). This distinguishes values of this type from just regular tuples of integers and logs.\ndata Log = [String] newtype LogWriter a = LogContainer (a, Log) newtype is a special way of creating new data types that only have one constructor and one field. Our type only has the one constructor LogWriter and a field to hold the value that’s in it. This is why we use it instead of data, which can create types with one or more constructors, each with an arbitrary number of fields.\nWe also need a way to “unwrap” our tuple from our constructor LogContainer and return the tuple it holds. In Haskell, if you have a data type with fields, you can use the special “record syntax” to name each field and automatically create getter functions for them.\nFor example, instead of defining shapes and pattern matching on them or creating getters by hand,\ndata Shape = Rectangle Float Float | Circle Float foo :: Shape -\u003e Whatever foo (Rectangle height width) = ... foo (Circle radius) = ... you can instead define the type using record syntax and use the automatically created getters.\ndata Shape = Rectangle { height :: Fload, width :: Float } | Circle { radius :: Float } -- Which automatically creates these functions: height :: Shape -\u003e Float height (Rectangle x _) = x width :: Shape -\u003e Float height (Rectangle _ x) = x radius :: Shape -\u003e Float radius (Circle x) = x We can do the same for our constructor LogContainer and create a field. It will create a function of the same name that takes a LogWriter a and returns a value of type (a, Log).\nBecause the LogWriter a input represents a whole monadic computation, we can call this field run to get a function that “runs” our computation, just like our runComputations function from earlier.\ndata Log = [String] newtype LogWriter a = LogContainer { run :: (a, Log) } Now we have a type! Next, we want to implement the functions return and \u003e\u003e= (bind) to make it a monad. Of course, Haskell has a typeclass for that.\nMake LogWriter Instance of the Monad Typeclass A typeclass is like an interface for types. It declares some functions that any type must implement in order to become an instance of that typeclass. For monads, these are just return and \u003e\u003e=.\nWe’ve already implemented those, so this should be easy peasy. Let’s just update our type signatures to use our new monad.\ninstance Monad LogWriter where return :: a -\u003e LogWriter a (\u003e\u003e=) :: LogWriter a -\u003e (a -\u003e LogWriter b) -\u003e (LogWriter b) return still returns a tuple with the input and an empty “log”, i.e., an empty list. The only difference now is that it also needs to use our new constructor.\ninstance Monad LogWriter where -- return :: a -\u003e LogWriter a return a = LogContainer (a, []) \u003e\u003e= now needs to return a LogContainer-wrapped value. It also needs to unwrap the intermediary results from the LogContainer constructor to access the number and log inside. In the input, we can use pattern matching.\ninstance Monad LogWriter where -- return :: a -\u003e LogWriter a return a = LogContainer (a, []) -- (\u003e\u003e=) :: LogWriter a -\u003e (a -\u003e LogWriter b) -\u003e (LogWriter b) (LogContainer (a, oldLog)) \u003e\u003e= f = ... In the body of the function we need to bind the intermediary result of applying f to a as well. We can go about it two ways.\nEither, we can use a let-binding and pattern matching:\ninstance Monad LogWriter where -- return :: a -\u003e LogWriter a return a = LogContainer (a, []) -- (\u003e\u003e=) :: LogWriter a -\u003e (a -\u003e LogWriter b) -\u003e (LogWriter b) (LogContainer (a, oldLog)) \u003e\u003e= f = let (LogContainer (b, newLog)) = f a in LogContainer (b, oldLog ++ newLog) Or, we can use a let-binding and our run function to remove the LogContainer constructor altogether:\ninstance Monad LogWriter where -- return :: a -\u003e LogWriter a return a = LogContainer (a, []) -- (\u003e\u003e=) :: LogWriter a -\u003e (a -\u003e LogWriter b) -\u003e (LogWriter b) (LogContainer (a, oldLog)) \u003e\u003e= f = let (b, newLog) = run (f a) in LogContainer (b, oldLog ++ newLog) Next, a monad is a special case of an applicative functor. Therefore, it also needs to implement the Applicative and Functor typeclasses.\nMake LogWriter Instance of the Functor Typeclass Make LogWriter Instance of the Applicative Typeclass Using LogWriter! Different Kinds of State ",
+  "wordCount" : "2637",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "author":[{
+    "@type": "Person",
+    "name": "Sophie Adeline Solheim Bosio"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/demystifying-monads-2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sophie Bosio",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/static/img/favicon.png"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Sophie Bosio (Alt + H)">Sophie Bosio</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/about" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/education" title="Education">
+                    <span>Education</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/SophieBosio" title="GitHub">
+                    <span>GitHub</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Demystifying Monads - Part 2/3
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    </h1>
+    <div class="post-meta">13 min&nbsp;·&nbsp;Sophie Adeline Solheim Bosio
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#a-running-example" aria-label="A Running Example">A Running Example</a></li>
+                <li>
+                    <a href="#composing-kleisli-arrows" aria-label="Composing Kleisli Arrows">Composing Kleisli Arrows</a></li>
+                <li>
+                    <a href="#advantages-of-monads" aria-label="Advantages of Monads">Advantages of Monads</a></li>
+                <li>
+                    <a href="#defining-the-logwriter-monad" aria-label="Defining the LogWriter Monad">Defining the LogWriter Monad</a></li>
+                <li>
+                    <a href="#make-logwriter-instance-of-the-monad-typeclass" aria-label="Make LogWriter Instance of the Monad Typeclass">Make LogWriter Instance of the Monad Typeclass</a></li>
+                <li>
+                    <a href="#make-logwriter-instance-of-the-functor-typeclass" aria-label="Make LogWriter Instance of the Functor Typeclass">Make LogWriter Instance of the Functor Typeclass</a></li>
+                <li>
+                    <a href="#make-logwriter-instance-of-the-applicative-typeclass" aria-label="Make LogWriter Instance of the Applicative Typeclass">Make LogWriter Instance of the Applicative Typeclass</a></li>
+                <li>
+                    <a href="#using-logwriter" aria-label="Using LogWriter!">Using LogWriter!</a></li>
+                <li>
+                    <a href="#different-kinds-of-state" aria-label="Different Kinds of State">Different Kinds of State</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>In the previous entry of this blog post series, we covered some of the theory of monads and motivated their use in the general case. This time, we&rsquo;ll take a crack at a practical example.</p>
+<p>We&rsquo;ll implement our own, specialised version of the Writer monad. My explanation takes lots of inspiration from the videos &hellip; and &hellip;, both available on YouTube.</p>
+<p>We&rsquo;ll start with a practical example and incrementally work our way to a complete monad. Once we&rsquo;ve seen how one monad works, I want to show how we can generalise the monad pattern to solve different problems. But that deserves its own blog post, so we&rsquo;ll save it for Part 3 of this series.</p>
+<p>I&rsquo;ll be using Haskell in the code examples below, but I&rsquo;ll try my best to explain concepts underway so you can follow along even if you haven&rsquo;t used Haskell before.</p>
+<h2 id="a-running-example">A Running Example<a hidden class="anchor" aria-hidden="true" href="#a-running-example">#</a></h2>
+<p>Say you have two pure functions, <code>inc</code> and <code>sqr</code>, that increments and squares a number, respectively. It takes an <code>Int</code> and returns an <code>Int</code>. In Haskell, this is what it would look like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">inc</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>      <span class="c1">-- Type signature</span>
+</span></span><span class="line"><span class="cl"><span class="nf">inc</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>          <span class="c1">-- Implementation</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">sqr</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span></span><span class="line"><span class="cl"><span class="nf">sqr</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span>
+</span></span></code></pre></div><p>Now say we want to add logging to each function so that we can run a computation like this:</p>
+<ol>
+<li>Increment 5</li>
+<li>Increment the previous result</li>
+<li>Square the previous result</li>
+<li>Increment the previous result</li>
+</ol>
+<p>Let our log be a list of strings.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">data</span> <span class="kt">Log</span> <span class="ow">=</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+</span></span></code></pre></div><p>The final result should give us both the number and the following log:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="p">[</span><span class="s">&#34;Incremented 5&#34;</span><span class="p">,</span> <span class="s">&#34;Incremented 6&#34;</span><span class="p">,</span> <span class="s">&#34;Squared 7&#34;</span><span class="p">,</span> <span class="s">&#34;Incremented 49&#34;</span><span class="p">]</span>
+</span></span></code></pre></div><p>If we pretend Haskell is an imperative language, we could imagine that we had a mutable variable <code>log</code> that we could append to. Let&rsquo;s just take the case of <code>inc</code>, since the procedure would be the same for <code>sqr</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">log</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nf">log</span> <span class="ow">=</span> <span class="kt">[]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">inc</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span></span><span class="line"><span class="cl"><span class="nf">inc</span> <span class="n">a</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">log</span> <span class="o">+=</span> <span class="s">&#34;Incremented &#34;</span> <span class="o">++</span> <span class="n">show</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl">  <span class="n">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span></code></pre></div><p>This function would no longer be pure and it would be impossible from the call site to see that it modified the <code>log</code>.</p>
+<p>In Haskell, it is also illegal. Our function can only know about what is immutable or explicitly passed to it as an argument.</p>
+<p>To fix this, we could also take the old log as argument and return the new log. Our new function takes and returns a tuple with an integer and a log.</p>
+<blockquote>
+<p><strong>NOTE:</strong></p>
+<p>In Haskell, you can prepend an element to a string using the cons operator <code>:</code> but to append, you must use the list concatenation operator <code>++</code> and append a singleton <em>list</em>. That&rsquo;s why the string below is in square brackets.</p>
+<p>We also convert integers to strings using the <code>show</code> operator.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">data</span> <span class="kt">Log</span> <span class="ow">=</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">inc</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">inc</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">oldLog</span><span class="p">)</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">oldLog</span> <span class="o">++</span> <span class="p">[</span><span class="s">&#34;Incremented &#34;</span> <span class="o">++</span> <span class="n">show</span> <span class="n">a</span><span class="p">])</span>
+</span></span></code></pre></div><p>At first glance, this looks fine, right? Now our function is completely pure again!</p>
+<p>But there&rsquo;s a subtle problem with this approach: Why does our simple arithmetic function know about list concatenation?</p>
+<p>We&rsquo;re mixing concerns here, since we are both incrementing integers and adding a new log string to the existing logs.</p>
+<p>If we had a bunch of functions with added logging, but realised later that we wanted a different data structure for our logs and redefined the <code>Log</code> data type, we would also have to change the list concatenation operator <code>++</code> in every single function definition implementing logging.</p>
+<p>Later, we&rsquo;ll see how we can return just the string that we&rsquo;d like to add to the logs. Then the concrete data structure and the operation used to accumulate the logs becomes opaque to the <code>inc</code> function.</p>
+<p>But for now, let&rsquo;s stick with the singleton list, because it will make our types a little clearer.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">inc&#39;</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">inc&#39;</span> <span class="n">a</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s">&#34;Incremented &#34;</span> <span class="o">++</span> <span class="n">show</span> <span class="n">a</span><span class="p">])</span>
+</span></span></code></pre></div><p>Nice, now we can write functions that just deal with values.</p>
+<p>But now we have a new problem.</p>
+<p>We <em>can</em> run our computations the way we want, but we need to write a new function. Let&rsquo;s call it <code>runComputations</code>.</p>
+<p>It needs to take the result from each function call and thread/pipe it to the next computation and also accumulates the log fragments. We can do this by binding each intermediary result in a <code>let</code>-binding.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">data</span> <span class="kt">Log</span> <span class="ow">=</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">inc</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">inc</span> <span class="n">a</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s">&#34;Incremented &#34;</span> <span class="o">++</span> <span class="n">show</span> <span class="n">a</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">sqr</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">sqr</span> <span class="n">a</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="p">[</span><span class="s">&#34;Squared &#34;</span> <span class="o">++</span> <span class="n">show</span> <span class="n">a</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">runComputations</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">runComputations</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">let</span> <span class="p">(</span><span class="n">result1</span><span class="p">,</span> <span class="n">log1</span><span class="p">)</span> <span class="ow">=</span> <span class="n">inc</span> <span class="mi">5</span>       <span class="kr">in</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">let</span> <span class="p">(</span><span class="n">result2</span><span class="p">,</span> <span class="n">log2</span><span class="p">)</span> <span class="ow">=</span> <span class="n">inc</span> <span class="n">result1</span> <span class="kr">in</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">let</span> <span class="p">(</span><span class="n">result3</span><span class="p">,</span> <span class="n">log3</span><span class="p">)</span> <span class="ow">=</span> <span class="n">sqr</span> <span class="n">result2</span> <span class="kr">in</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">let</span> <span class="p">(</span><span class="n">result4</span><span class="p">,</span> <span class="n">log4</span><span class="p">)</span> <span class="ow">=</span> <span class="n">inc</span> <span class="n">result3</span> <span class="kr">in</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="n">result4</span><span class="p">,</span> <span class="n">log1</span> <span class="o">++</span> <span class="n">log2</span> <span class="o">++</span> <span class="n">log3</span> <span class="o">++</span> <span class="n">log4</span><span class="p">)</span>
+</span></span></code></pre></div><p>In the Haskell REPL, called GHCi, we can now run our computations and get the desired result:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ghci&gt; runComputations
+</span></span><span class="line"><span class="cl"><span class="o">(</span>50, <span class="o">[</span><span class="s2">&#34;Incremented 5&#34;</span>, <span class="s2">&#34;Incremented 6&#34;</span>, <span class="s2">&#34;Squared 7&#34;</span>, <span class="s2">&#34;Incremented 49&#34;</span><span class="o">])</span>
+</span></span></code></pre></div><p>Well, it&rsquo;s pure and cleanly separates concerns, but&hellip; It&rsquo;s ugly and verbose. We&rsquo;re binding a series of temporary variables that are only really used to thread the values to the next computations. And worse, adding a new computation in the middle of the chain requires several changes to the code.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">runComputations</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">runComputations</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">let</span> <span class="p">(</span><span class="n">result1</span><span class="p">,</span> <span class="n">log1</span><span class="p">)</span> <span class="ow">=</span> <span class="n">inc</span> <span class="mi">5</span>       <span class="kr">in</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">let</span> <span class="p">(</span><span class="n">result2</span><span class="p">,</span> <span class="n">log2</span><span class="p">)</span> <span class="ow">=</span> <span class="n">sqr</span> <span class="n">result1</span> <span class="kr">in</span> <span class="c1">-- Add this line</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- Change all temp vars in the following lines:</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">let</span> <span class="p">(</span><span class="n">result3</span><span class="p">,</span> <span class="n">log3</span><span class="p">)</span> <span class="ow">=</span> <span class="n">inc</span> <span class="n">result2</span> <span class="kr">in</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">let</span> <span class="p">(</span><span class="n">result4</span><span class="p">,</span> <span class="n">log4</span><span class="p">)</span> <span class="ow">=</span> <span class="n">sqr</span> <span class="n">result3</span> <span class="kr">in</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">let</span> <span class="p">(</span><span class="n">result5</span><span class="p">,</span> <span class="n">log5</span><span class="p">)</span> <span class="ow">=</span> <span class="n">inc</span> <span class="n">result4</span> <span class="kr">in</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- Add an extra log fragment to the result:</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="n">result5</span><span class="p">,</span> <span class="n">log1</span> <span class="o">++</span> <span class="n">log2</span> <span class="o">++</span> <span class="n">log3</span> <span class="o">++</span> <span class="n">log4</span> <span class="o">++</span> <span class="n">log5</span><span class="p">)</span>
+</span></span></code></pre></div><p>So in essence, we&rsquo;d like to compose our modified functions.</p>
+<h2 id="composing-kleisli-arrows">Composing Kleisli Arrows<a hidden class="anchor" aria-hidden="true" href="#composing-kleisli-arrows">#</a></h2>
+<p>Let&rsquo;s take a cue from category theory and go abstract. Our two functions, <code>inc</code> and <code>sqr</code> are functions that originally took an integer and returned an integer. Now, we&rsquo;ve proposed two modified functions, that each take an integer and return an integer plus a log string. Let&rsquo;s mark the new ones with an apostrophe.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="c1">-- Old definitions:</span>
+</span></span><span class="line"><span class="cl"><span class="nf">inc</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span></span><span class="line"><span class="cl"><span class="nf">sqr</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- New definitions:</span>
+</span></span><span class="line"><span class="cl"><span class="nf">inc&#39;</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">sqr&#39;</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span></code></pre></div><p>This kind of function, which take a type and return a type plus something extra, is an example of <em>Kleisli arrows</em>. An arrow is a generalisation of function-like things.</p>
+<p>Now, we&rsquo;d like to compose these functions.</p>
+<p>With the original, simple arithmetic functions, this is easy. They take and return integers, so they are trivially composable.</p>
+<p>But our Kleisli arrows are harder to work with. To compose these functions, we can essentially do what we did before with the <code>let</code>-bindings. Instead of composing the functions themselves, we can can take the result of one function and use the next function on it.</p>
+<p>We&rsquo;ll take the number from the result of the previous computation and pipe it into the next computation. Then we want to bind the result of that computation to a temporary variable so that we can access the number and log string in the new result. The final result should have the new number and the concatenation of the old log strings and the new one.</p>
+<p>For no particular reason, let&rsquo;s use the weird symbol <code>&gt;&gt;=</code> for this operation. It&rsquo;s called &ldquo;bind&rdquo;, and I imagine it&rsquo;s because we bind the intermediary result in a temporary variable &ndash; but that&rsquo;s just my guess.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="p">(</span><span class="o">&gt;&gt;=</span><span class="p">)</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">))</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">oldLog</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">let</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">newLog</span><span class="p">)</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">a</span> <span class="kr">in</span>   <span class="c1">-- where f is a function like inc&#39; or sqr&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">oldLog</span> <span class="o">++</span> <span class="n">newLog</span><span class="p">)</span>
+</span></span></code></pre></div><p>Sweet! Now the <code>let</code>-binding only exists inside this function and we can write a much nicer version of the code above where we previously had a ton of <code>let</code>-bindings:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">runComputations</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">runComputations</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">inc</span> <span class="mi">5</span> <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sqr</span>   <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">inc</span>   <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sqr</span>   <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">inc</span>
+</span></span></code></pre></div><p>If we have a function that does something more, we might want to create a way for a function to return a result of the type <code>(Int, Log)</code> so it can be chained together with the rest of our functions.</p>
+<p>This function is called &ldquo;return&rdquo;. Its only job is to take an integer and create a result with no new log string. When chained together with other functions with <code>&gt;&gt;=</code>, it shouldn&rsquo;t change the logs and since <code>&gt;&gt;=</code> combines the old log with the new by concatenating them, our only choice is the empty list <code>[]</code>. Concatenating a list with the empty list returns the original list, making it the <em>identity element</em> of lists under concatenation.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">return</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">return</span> <span class="n">a</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="kt">[]</span><span class="p">)</span>
+</span></span></code></pre></div><p>Now we can create new functions that also return <code>(Int, Log)</code> without updating the logs.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">double</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span></span><span class="line"><span class="cl"><span class="nf">double</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">a</span> <span class="o">*</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">plus</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span></span><span class="line"><span class="cl"><span class="nf">plus</span> <span class="n">a</span> <span class="n">b</span> <span class="ow">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">foo</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">foo</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">return</span> <span class="p">(</span><span class="n">double</span> <span class="p">(</span><span class="n">plus</span> <span class="n">a</span> <span class="mi">5</span><span class="p">))</span>
+</span></span></code></pre></div><p>And we can use <code>foo</code> in our chain of computations.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">runComputations</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">runComputations</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">inc</span> <span class="mi">5</span> <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sqr</span>   <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">inc</span>   <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sqr</span>   <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">inc</span>   <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">foo</span>   <span class="o">&gt;&gt;=</span> <span class="c1">-- This works now!</span>
+</span></span><span class="line"><span class="cl">  <span class="n">inc</span>
+</span></span></code></pre></div><p>A pretty good improvement.</p>
+<p>But of course, we&rsquo;re working with a typed language and so we&rsquo;d like to create a type for all of this!</p>
+<p>What is the point of creating a type, though, when this works so well?</p>
+<h2 id="advantages-of-monads">Advantages of Monads<a hidden class="anchor" aria-hidden="true" href="#advantages-of-monads">#</a></h2>
+<p>One advantage is that we can see statically that a function performs side effects and we can see this:</p>
+<ul>
+<li>In the type signature</li>
+<li>In the definition</li>
+<li>At all its call sites</li>
+</ul>
+<p>Another is that with a type, we can create a strict interface of functions that interact with our log to ensure that only permitted reads and writes are possible.</p>
+<p>And finally, when something looks kind of like a monad, we benefit from actually implementing it as such, because it means that all the properties that apply to monads also apply to our type.</p>
+<h2 id="defining-the-logwriter-monad">Defining the <code>LogWriter</code> Monad<a hidden class="anchor" aria-hidden="true" href="#defining-the-logwriter-monad">#</a></h2>
+<p>Previously, we had functions that took an <code>Int</code> and returned a <code>(Int, Log)</code>. Now, we&rsquo;d like to create a type for the result where the &ldquo;bind&rdquo; and &ldquo;return&rdquo; functions are built into the type.</p>
+<p>A monad is not exactly a type, though. It&rsquo;s a transformation that takes a type and creates a new type. In other words, it&rsquo;s a parametrised type or a <em>type constructor</em>.</p>
+<p>In our case, the logs are our &ldquo;side-effecting&rdquo; stuff and the fact that we&rsquo;re doing arithmetic is incidental. Therefore, our log writing mechanisms are what constitutes our monad and <code>Int</code> is the type that it takes for us.</p>
+<p>Let&rsquo;s call our monad <code>LogWriter</code> and let it take a type as its parameter.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">newtype</span> <span class="kt">LogWriter</span> <span class="n">a</span> <span class="ow">=</span> <span class="o">...</span>
+</span></span></code></pre></div><p>Now, the type constructor also needs a concrete value constructor. By convention, the two use the same name. In our case, both would be <code>LogWriter</code>. But for the sake of clarity, let&rsquo;s call the value constructor <code>LogContainer</code>.</p>
+<p>To create a value of the type <code>LogWriter Int</code>, we use the <code>LogContainer</code> constructor to wrap a value like <code>(5, [&quot;Squared 2&quot;, &quot;Incremented 4&quot;])</code>. This distinguishes values of this type from just regular tuples of integers and logs.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">data</span> <span class="kt">Log</span> <span class="ow">=</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">newtype</span> <span class="kt">LogWriter</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">LogContainer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span>
+</span></span></code></pre></div><blockquote>
+<p><code>newtype</code> is a special way of creating new data types that only have one constructor and one field.
+Our type only has the one constructor <code>LogWriter</code> and a field to hold the value that&rsquo;s in it. This is why we use it instead of <code>data</code>, which can create types with one or more constructors, each with an arbitrary number of fields.</p>
+</blockquote>
+<p>We also need a way to &ldquo;unwrap&rdquo; our tuple from our constructor <code>LogContainer</code> and return the tuple it holds. In Haskell, if you have a data type with fields, you can use the special &ldquo;record syntax&rdquo; to name each field and automatically create getter functions for them.</p>
+<p>For example, instead of defining shapes and pattern matching on them or creating getters by hand,</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">data</span> <span class="kt">Shape</span> <span class="ow">=</span> <span class="kt">Rectangle</span> <span class="kt">Float</span> <span class="kt">Float</span>
+</span></span><span class="line"><span class="cl">           <span class="o">|</span> <span class="kt">Circle</span> <span class="kt">Float</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">foo</span> <span class="ow">::</span> <span class="kt">Shape</span> <span class="ow">-&gt;</span> <span class="kt">Whatever</span>
+</span></span><span class="line"><span class="cl"><span class="nf">foo</span> <span class="p">(</span><span class="kt">Rectangle</span> <span class="n">height</span> <span class="n">width</span><span class="p">)</span> <span class="ow">=</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nf">foo</span> <span class="p">(</span><span class="kt">Circle</span> <span class="n">radius</span><span class="p">)</span>          <span class="ow">=</span> <span class="o">...</span>
+</span></span></code></pre></div><p>you can instead define the type using record syntax and use the automatically created getters.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">data</span> <span class="kt">Shape</span> <span class="ow">=</span> <span class="kt">Rectangle</span> <span class="p">{</span> <span class="n">height</span> <span class="ow">::</span> <span class="kt">Fload</span><span class="p">,</span> <span class="n">width</span> <span class="ow">::</span> <span class="kt">Float</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">           <span class="o">|</span> <span class="kt">Circle</span> <span class="p">{</span> <span class="n">radius</span> <span class="ow">::</span> <span class="kt">Float</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- Which automatically creates these functions:</span>
+</span></span><span class="line"><span class="cl"><span class="nf">height</span> <span class="ow">::</span> <span class="kt">Shape</span> <span class="ow">-&gt;</span> <span class="kt">Float</span>
+</span></span><span class="line"><span class="cl"><span class="nf">height</span> <span class="p">(</span><span class="kt">Rectangle</span> <span class="n">x</span> <span class="kr">_</span><span class="p">)</span> <span class="ow">=</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">width</span> <span class="ow">::</span> <span class="kt">Shape</span> <span class="ow">-&gt;</span> <span class="kt">Float</span>
+</span></span><span class="line"><span class="cl"><span class="nf">height</span> <span class="p">(</span><span class="kt">Rectangle</span> <span class="kr">_</span> <span class="n">x</span><span class="p">)</span> <span class="ow">=</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">radius</span> <span class="ow">::</span> <span class="kt">Shape</span> <span class="ow">-&gt;</span> <span class="kt">Float</span>
+</span></span><span class="line"><span class="cl"><span class="nf">radius</span> <span class="p">(</span><span class="kt">Circle</span> <span class="n">x</span><span class="p">)</span> <span class="ow">=</span> <span class="n">x</span>
+</span></span></code></pre></div><p>We can do the same for our constructor <code>LogContainer</code> and create a field. It will create a function of the same name that takes a <code>LogWriter a</code> and returns a value of type <code>(a, Log)</code>.</p>
+<p>Because the <code>LogWriter a</code> input represents a whole monadic computation, we can call this field <code>run</code> to get a function that &ldquo;runs&rdquo; our computation, just like our <code>runComputations</code> function from earlier.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">data</span> <span class="kt">Log</span> <span class="ow">=</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">newtype</span> <span class="kt">LogWriter</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">LogContainer</span> <span class="p">{</span> <span class="n">run</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="kt">Log</span><span class="p">)</span> <span class="p">}</span>
+</span></span></code></pre></div><p>Now we have a type! Next, we want to implement the functions <code>return</code> and <code>&gt;&gt;=</code> (bind) to make it a monad. Of course, Haskell has a typeclass for that.</p>
+<h2 id="make-logwriter-instance-of-the-monad-typeclass">Make <code>LogWriter</code> Instance of the <code>Monad</code> Typeclass<a hidden class="anchor" aria-hidden="true" href="#make-logwriter-instance-of-the-monad-typeclass">#</a></h2>
+<p>A typeclass is like an interface for types. It declares some functions that any type must implement in order to become an instance of that typeclass. For monads, these are just <code>return</code> and <code>&gt;&gt;=</code>.</p>
+<p>We&rsquo;ve already implemented those, so this should be easy peasy. Let&rsquo;s just update our type signatures to use our new monad.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">instance</span> <span class="kt">Monad</span> <span class="kt">LogWriter</span> <span class="kr">where</span>
+</span></span><span class="line"><span class="cl">  <span class="n">return</span> <span class="ow">::</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">LogWriter</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="o">&gt;&gt;=</span><span class="p">)</span>  <span class="ow">::</span> <span class="kt">LogWriter</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">LogWriter</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">LogWriter</span> <span class="n">b</span><span class="p">)</span>
+</span></span></code></pre></div><p><code>return</code> still returns a tuple with the input and an empty &ldquo;log&rdquo;, i.e., an empty list. The only difference now is that it also needs to use our new constructor.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">instance</span> <span class="kt">Monad</span> <span class="kt">LogWriter</span> <span class="kr">where</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">-- return :: a -&gt; LogWriter a</span>
+</span></span><span class="line"><span class="cl">    <span class="n">return</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">LogContainer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="kt">[]</span><span class="p">)</span>
+</span></span></code></pre></div><p><code>&gt;&gt;=</code> now needs to return a <code>LogContainer</code>-wrapped value. It also needs to unwrap the intermediary results from the <code>LogContainer</code> constructor to access the number and log inside. In the input, we can use pattern matching.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">instance</span> <span class="kt">Monad</span> <span class="kt">LogWriter</span> <span class="kr">where</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">-- return :: a -&gt; LogWriter a</span>
+</span></span><span class="line"><span class="cl">    <span class="n">return</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">LogContainer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="kt">[]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="c1">-- (&gt;&gt;=)  :: LogWriter a -&gt; (a -&gt; LogWriter b) -&gt; (LogWriter b)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="kt">LogContainer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">oldLog</span><span class="p">))</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="o">...</span>
+</span></span></code></pre></div><p>In the body of the function we need to bind the intermediary result of applying <code>f</code> to <code>a</code> as well. We can go about it two ways.</p>
+<p>Either, we can use a <code>let</code>-binding and pattern matching:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">instance</span> <span class="kt">Monad</span> <span class="kt">LogWriter</span> <span class="kr">where</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">-- return :: a -&gt; LogWriter a</span>
+</span></span><span class="line"><span class="cl">    <span class="n">return</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">LogContainer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="kt">[]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="c1">-- (&gt;&gt;=)  :: LogWriter a -&gt; (a -&gt; LogWriter b) -&gt; (LogWriter b)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="kt">LogContainer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">oldLog</span><span class="p">))</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">let</span> <span class="p">(</span><span class="kt">LogContainer</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">newLog</span><span class="p">))</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">a</span> <span class="kr">in</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">LogContainer</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">oldLog</span> <span class="o">++</span> <span class="n">newLog</span><span class="p">)</span>
+</span></span></code></pre></div><p>Or, we can use a <code>let</code>-binding and our <code>run</code> function to remove the <code>LogContainer</code> constructor altogether:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="kr">instance</span> <span class="kt">Monad</span> <span class="kt">LogWriter</span> <span class="kr">where</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">-- return :: a -&gt; LogWriter a</span>
+</span></span><span class="line"><span class="cl">    <span class="n">return</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">LogContainer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="kt">[]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="c1">-- (&gt;&gt;=)  :: LogWriter a -&gt; (a -&gt; LogWriter b) -&gt; (LogWriter b)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="kt">LogContainer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">oldLog</span><span class="p">))</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">let</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">newLog</span><span class="p">)</span> <span class="ow">=</span> <span class="n">run</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span><span class="p">)</span> <span class="kr">in</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">LogContainer</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">oldLog</span> <span class="o">++</span> <span class="n">newLog</span><span class="p">)</span>
+</span></span></code></pre></div><p>Next, a monad is a special case of an applicative functor. Therefore, it also needs to implement the <code>Applicative</code> and <code>Functor</code> typeclasses.</p>
+<h2 id="make-logwriter-instance-of-the-functor-typeclass">Make <code>LogWriter</code> Instance of the <code>Functor</code> Typeclass<a hidden class="anchor" aria-hidden="true" href="#make-logwriter-instance-of-the-functor-typeclass">#</a></h2>
+<h2 id="make-logwriter-instance-of-the-applicative-typeclass">Make <code>LogWriter</code> Instance of the <code>Applicative</code> Typeclass<a hidden class="anchor" aria-hidden="true" href="#make-logwriter-instance-of-the-applicative-typeclass">#</a></h2>
+<h2 id="using-logwriter">Using <code>LogWriter</code>!<a hidden class="anchor" aria-hidden="true" href="#using-logwriter">#</a></h2>
+<h2 id="different-kinds-of-state">Different Kinds of State<a hidden class="anchor" aria-hidden="true" href="#different-kinds-of-state">#</a></h2>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/functionalprogramming/">Functionalprogramming</a></li>
+      <li><a href="http://localhost:1313/tags/haskell/">Haskell</a></li>
+      <li><a href="http://localhost:1313/tags/monads/">Monads</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/demystifying-monads-1/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Demystifying Monads - Part 1/3</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Demystifying Monads - Part 2/3 on x"
+            href="https://x.com/intent/tweet/?text=Demystifying%20Monads%20-%20Part%202%2f3&amp;url=http%3a%2f%2flocalhost%3a1313%2fposts%2fdemystifying-monads-2%2f&amp;hashtags=functionalprogramming%2chaskell%2cmonads">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Demystifying Monads - Part 2/3 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2fposts%2fdemystifying-monads-2%2f&amp;title=Demystifying%20Monads%20-%20Part%202%2f3&amp;summary=Demystifying%20Monads%20-%20Part%202%2f3&amp;source=http%3a%2f%2flocalhost%3a1313%2fposts%2fdemystifying-monads-2%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Demystifying Monads - Part 2/3 on reddit"
+            href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fdemystifying-monads-2%2f&title=Demystifying%20Monads%20-%20Part%202%2f3">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Demystifying Monads - Part 2/3 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fdemystifying-monads-2%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Demystifying Monads - Part 2/3 on whatsapp"
+            href="https://api.whatsapp.com/send?text=Demystifying%20Monads%20-%20Part%202%2f3%20-%20http%3a%2f%2flocalhost%3a1313%2fposts%2fdemystifying-monads-2%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Demystifying Monads - Part 2/3 on telegram"
+            href="https://telegram.me/share/url?text=Demystifying%20Monads%20-%20Part%202%2f3&amp;url=http%3a%2f%2flocalhost%3a1313%2fposts%2fdemystifying-monads-2%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Demystifying Monads - Part 2/3 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Demystifying%20Monads%20-%20Part%202%2f3&u=http%3a%2f%2flocalhost%3a1313%2fposts%2fdemystifying-monads-2%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">Sophie Bosio</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
