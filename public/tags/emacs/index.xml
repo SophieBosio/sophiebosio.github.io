@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Emacs on Sophie Bosio</title>
-    <link>http://localhost:1313/tags/emacs/</link>
+    <link>https://sophiebosio.github.io/tags/emacs/</link>
     <description>Recent content in Emacs on Sophie Bosio</description>
-    <generator>Hugo -- 0.136.5</generator>
+    <generator>Hugo -- 0.140.2</generator>
     <language>en</language>
     <lastBuildDate>Tue, 17 Sep 2024 22:42:00 +0200</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://sophiebosio.github.io/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Setting Up Emacs LSP-Mode For Clojure</title>
-      <link>http://localhost:1313/posts/lsp-mode-for-clojure/</link>
+      <link>https://sophiebosio.github.io/posts/lsp-mode-for-clojure/</link>
       <pubDate>Tue, 17 Sep 2024 22:42:00 +0200</pubDate>
-      <guid>http://localhost:1313/posts/lsp-mode-for-clojure/</guid>
+      <guid>https://sophiebosio.github.io/posts/lsp-mode-for-clojure/</guid>
       <description>&lt;p&gt;I use &lt;a href=&#34;https://clojure.org/&#34;&gt;Clojure&lt;/a&gt; on the backend &lt;a href=&#34;https://www.ardoq.com/&#34;&gt;where I work&lt;/a&gt;. I think it&amp;rsquo;s really fun, especially in combination with Emacs, since Emacs is built with Emacs Lisp and Clojure is a Lisp dialect. So many of Emacs&amp;rsquo; default keybindings started clicking for me once I started working with a language in the same tradition, editing structurally and by semantic units rather than line-by-line or character-by-character. I&amp;rsquo;m not alone in loving both and there&amp;rsquo;s clearly a lot of overlap between the two communities, which is evident from the number of Clojure packages for Emacs.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Building Your First Emacs Config</title>
-      <link>http://localhost:1313/posts/first-emacs-config/</link>
+      <link>https://sophiebosio.github.io/posts/first-emacs-config/</link>
       <pubDate>Thu, 21 Dec 2023 23:29:00 +0100</pubDate>
-      <guid>http://localhost:1313/posts/first-emacs-config/</guid>
+      <guid>https://sophiebosio.github.io/posts/first-emacs-config/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt; is a wonderful piece of software. It&amp;rsquo;s easily my favourite program of all
 time. It can also be a little overwhelming to configure for the first time.&lt;/p&gt;
 &lt;p&gt;One of the many things that make Emacs great, though, is its dedicated and
@@ -29,9 +29,9 @@ out using Emacs and trying to write my first Emacs configuration file.&lt;/p&gt;
     </item>
     <item>
       <title>Prettifying Emacs Org Mode</title>
-      <link>http://localhost:1313/posts/prettifying-emacs-org-mode/</link>
+      <link>https://sophiebosio.github.io/posts/prettifying-emacs-org-mode/</link>
       <pubDate>Thu, 10 Aug 2023 22:19:00 +0200</pubDate>
-      <guid>http://localhost:1313/posts/prettifying-emacs-org-mode/</guid>
+      <guid>https://sophiebosio.github.io/posts/prettifying-emacs-org-mode/</guid>
       <description>&lt;p&gt;In my opinion, the power of Emacs is that you&amp;rsquo;re able to program your own
 working environment. Other editors may be just as, or possibly more, efficient
 to use, but I haven&amp;rsquo;t come across any that give you control over as many aspects
@@ -47,9 +47,9 @@ available on my &lt;a href=&#34;https://github.com/SophieBosio/.emacs.d&#34;&gt;
     </item>
     <item>
       <title>Static Site Generation with Hugo</title>
-      <link>http://localhost:1313/posts/hugo/</link>
+      <link>https://sophiebosio.github.io/posts/hugo/</link>
       <pubDate>Thu, 08 Jun 2023 12:18:00 +0200</pubDate>
-      <guid>http://localhost:1313/posts/hugo/</guid>
+      <guid>https://sophiebosio.github.io/posts/hugo/</guid>
       <description>&lt;p&gt;This website is built with &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; and &lt;a href=&#34;https://ox-hugo.scripter.co/&#34;&gt;&lt;code&gt;ox-hugo&lt;/code&gt;&lt;/a&gt;, an exporting engine that lets me
 write my posts in &lt;a href=&#34;https://orgmode.org/&#34;&gt;Org mode&lt;/a&gt; and then put it online easily.&lt;/p&gt;
 &lt;p&gt;Org mode is a really clever and powerful plain text format that works great for note

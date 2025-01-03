@@ -1,6 +1,5 @@
 baseURL: "https://sophiebosio.github.io/"
 title: Sophie Bosio
-paginate: 5
 theme: PaperMod
 
 enableInlineShortcodes: true
@@ -18,6 +17,7 @@ languages:
     en:
         languageName: "English"
         weight: 1
+        pagerSize: 5
         taxonomies:
           category: categories
           tag: tags

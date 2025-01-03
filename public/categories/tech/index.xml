@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tech on Sophie Bosio</title>
-    <link>http://localhost:1313/categories/tech/</link>
+    <link>https://sophiebosio.github.io/categories/tech/</link>
     <description>Recent content in Tech on Sophie Bosio</description>
-    <generator>Hugo -- 0.136.5</generator>
+    <generator>Hugo -- 0.140.2</generator>
     <language>en</language>
     <lastBuildDate>Thu, 08 Jun 2023 12:18:00 +0200</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/tech/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://sophiebosio.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Static Site Generation with Hugo</title>
-      <link>http://localhost:1313/posts/hugo/</link>
+      <link>https://sophiebosio.github.io/posts/hugo/</link>
       <pubDate>Thu, 08 Jun 2023 12:18:00 +0200</pubDate>
-      <guid>http://localhost:1313/posts/hugo/</guid>
+      <guid>https://sophiebosio.github.io/posts/hugo/</guid>
       <description>&lt;p&gt;This website is built with &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; and &lt;a href=&#34;https://ox-hugo.scripter.co/&#34;&gt;&lt;code&gt;ox-hugo&lt;/code&gt;&lt;/a&gt;, an exporting engine that lets me
 write my posts in &lt;a href=&#34;https://orgmode.org/&#34;&gt;Org mode&lt;/a&gt; and then put it online easily.&lt;/p&gt;
 &lt;p&gt;Org mode is a really clever and powerful plain text format that works great for note

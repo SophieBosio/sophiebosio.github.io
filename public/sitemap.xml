@@ -2,51 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/tags/emacs/</loc>
+    <loc>https://sophiebosio.github.io/tags/emacs/</loc>
     <lastmod>2024-09-17T22:42:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://sophiebosio.github.io/posts/</loc>
     <lastmod>2024-09-17T22:42:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/lsp-mode-for-clojure/</loc>
+    <loc>https://sophiebosio.github.io/posts/lsp-mode-for-clojure/</loc>
     <lastmod>2024-09-17T22:42:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://sophiebosio.github.io/</loc>
     <lastmod>2024-09-17T22:42:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://sophiebosio.github.io/tags/</loc>
     <lastmod>2024-09-17T22:42:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/first-emacs-config/</loc>
+    <loc>https://sophiebosio.github.io/posts/first-emacs-config/</loc>
     <lastmod>2023-12-21T23:29:00+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/prettifying-emacs-org-mode/</loc>
+    <loc>https://sophiebosio.github.io/posts/prettifying-emacs-org-mode/</loc>
     <lastmod>2023-08-10T22:19:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://sophiebosio.github.io/about/</loc>
     <lastmod>2023-06-08T17:43:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://sophiebosio.github.io/education/</loc>
+    <lastmod>2023-06-08T14:48:00+02:00</lastmod>
+  </url><url>
+    <loc>https://sophiebosio.github.io/categories/</loc>
     <lastmod>2023-06-08T12:18:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/hugo/</loc>
+    <loc>https://sophiebosio.github.io/posts/hugo/</loc>
     <lastmod>2023-06-08T12:18:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/tech/</loc>
+    <loc>https://sophiebosio.github.io/categories/tech/</loc>
     <lastmod>2023-06-08T12:18:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/education/</loc>
+    <loc>https://sophiebosio.github.io/search/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/demystifying-monads-2/</loc>
-  </url><url>
-    <loc>http://localhost:1313/tags/functionalprogramming/</loc>
-  </url><url>
-    <loc>http://localhost:1313/tags/haskell/</loc>
-  </url><url>
-    <loc>http://localhost:1313/tags/monads/</loc>
-  </url><url>
-    <loc>http://localhost:1313/search/</loc>
-  </url><url>
-    <loc>http://localhost:1313/series/</loc>
+    <loc>https://sophiebosio.github.io/series/</loc>
   </url>
 </urlset>
